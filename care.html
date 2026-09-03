@@ -333,7 +333,6 @@ tailwind.config = {
 </footer>
 
 <script src="assets/species.js"></script>
-<script src="assets/editor.js" defer></script>
 <script>
 /* ------------------------------------------------------------------
    Care guide: filtering, search and rendering.
@@ -607,24 +606,32 @@ function renderFilters() {
 }
 
 function matches(s) {
+  if (!s) return false;
   if (activeGroup !== 'all' && s.group !== activeGroup) return false;
   if (!query) return true;
-  const hay = [s.name, s.sci, s.level, groupOf(s.group).label, s.diet, s.substrate, s.health, s.notes.join(' ')].join(' ').toLowerCase();
-  return query.split(/\s+/).every(t => hay.includes(t));
+  const notesStr = Array.isArray(s.notes) ? s.notes.join(' ') : (s.notes || '');
+  const groupLabel = groupOf(s.group) ? groupOf(s.group).label : '';
+  const hay = [(s.name||''), (s.sci||''), (s.level||''), groupLabel, (s.diet||''), (s.substrate||''), (s.health||''), notesStr].join(' ').toLowerCase();
+  return query.split(/\s+/).filter(Boolean).every(t => hay.includes(t));
 }
 
 function renderGrid() {
-  const list = window.SPECIES.filter(matches);
+  const speciesList = Array.isArray(window.SPECIES) ? window.SPECIES : [];
+  const list = speciesList.filter(matches);
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
+  if (!grid) return;
 
   grid.innerHTML = list.map(card).join('');
-  empty.classList.toggle('hidden', list.length > 0);
+  if (empty) empty.classList.toggle('hidden', list.length > 0);
 
-  const total = window.SPECIES.length;
-  document.getElementById('count').textContent =
-    list.length === total ? `${total} species in the guide`
-                          : `${list.length} of ${total} species`;
+  const total = speciesList.length;
+  const countEl = document.getElementById('count');
+  if (countEl) {
+    countEl.textContent = list.length === total
+      ? `${total} species in the guide`
+      : `${list.length} of ${total} species`;
+  }
 }
 
 function renderQuestions() {
@@ -688,12 +695,21 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSources();
   renderGrid();
 
-  // Species edited through /admin/ land in content/species.json and replace the
-  // defaults above. If the file is missing the guide simply keeps its defaults.
-  fetch('content/species.json', { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : null)
-    .then(d => { if (d && Array.isArray(d.species) && d.species.length) { window.SPECIES = d.species; renderGrid(); } })
-    .catch(() => {});
+  // Fetch latest species data (in case species.js is cached or stale)
+  fetch('/content/species.json', { cache: 'no-store' })
+    .then(function(r) { return r.ok ? r.json() : Promise.reject('not ok'); })
+    .then(function(d) {
+      if (d && Array.isArray(d.species) && d.species.length) {
+        window.SPECIES = d.species;
+        renderGrid();
+      }
+    })
+    .catch(function() {
+      // species.js already set window.SPECIES — nothing more to do
+      if (!Array.isArray(window.SPECIES) || !window.SPECIES.length) {
+        console.warn('care.html: species data unavailable');
+      }
+    });
 
   const input = document.getElementById('q');
   const clear = document.getElementById('clear-q');
@@ -712,6 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
     }
   }
+});
 </script>
 
 <!-- ================= VISUAL EDITOR (GrapesJS) ================= -->

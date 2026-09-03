@@ -10,8 +10,14 @@
 /assets/editor.js
   Cache-Control: no-cache, no-store, must-revalidate
 
+/assets/species.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
 /assets/*
   Cache-Control: public, max-age=86400
+
+/content/species.json
+  Cache-Control: public, max-age=0, must-revalidate
 
 /content/site.json
   Cache-Control: public, max-age=0, must-revalidate

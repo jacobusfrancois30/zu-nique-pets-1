@@ -53,7 +53,9 @@
   function saveStoredAssets(assets) {
     try {
       localStorage.setItem('zu_custom_assets', JSON.stringify(assets));
-    } catch (e) {}
+    } catch (e) {
+      console.warn('LocalStorage full or unavailable', e);
+    }
   }
 
   function addStoredAsset(asset) {
@@ -72,6 +74,63 @@
     return list;
   }
 
+  function addAssetToGrapes(editor, asset) {
+    try {
+      var am = editor.Assets || editor.assetManager || (editor.AssetManager ? editor.AssetManager : null);
+      if (am && typeof am.add === 'function') {
+        am.add(asset);
+      }
+    } catch (e) {}
+  }
+
+  function removeAssetFromGrapes(editor, src) {
+    try {
+      var am = editor.Assets || editor.assetManager || (editor.AssetManager ? editor.AssetManager : null);
+      if (am && typeof am.remove === 'function') {
+        am.remove(src);
+      }
+    } catch (e) {}
+  }
+
+  function processImageFile(file, callback) {
+    if (!file || !file.type.match(/^image\//)) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var rawUrl = e.target.result;
+      var img = new Image();
+      img.onload = function() {
+        var maxDim = 1600;
+        var w = img.width;
+        var h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+        try {
+          var canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          var resizedUrl = canvas.toDataURL('image/jpeg', 0.85);
+          callback(resizedUrl);
+        } catch (err) {
+          callback(rawUrl);
+        }
+      };
+      img.onerror = function() {
+        callback(rawUrl);
+      };
+      img.src = rawUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
   /* Which file in the repo this page is. index.html for the site root. */
   function repoPath() {
     var p = window.location.pathname.replace(/^\/+/, '');
@@ -79,45 +138,7 @@
     return p;
   }
 
-  /* ---------- Floating Launcher Pill on Live Site ---------- */
-  function addFloatingLauncher() {
-    if (document.getElementById('zu-floating-edit-btn')) return;
-    var btn = document.createElement('button');
-    btn.id = 'zu-floating-edit-btn';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Open Drag and Drop Visual Editor');
-    btn.style.cssText = 'position:fixed;bottom:24px;left:24px;z-index:9990;display:inline-flex;align-items:center;gap:8px;' +
-      'background:rgba(0,39,46,0.92);backdrop-filter:blur(12px);color:#8CC63F;border:1px solid rgba(140,198,63,0.35);' +
-      'padding:10px 18px;border-radius:999px;font:700 13px/1 Outfit,system-ui,sans-serif;' +
-      'box-shadow:0 12px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(140,198,63,0.2);cursor:pointer;transition:all .25s ease;';
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>Edit Page (Drag &amp; Drop)</span>';
-    
-    btn.addEventListener('mouseenter', function() {
-      btn.style.background = '#8CC63F';
-      btn.style.color = '#00272E';
-      btn.style.transform = 'translateY(-2px) scale(1.03)';
-      btn.style.boxShadow = '0 16px 36px -8px rgba(140,198,63,0.45)';
-    });
-    btn.addEventListener('mouseleave', function() {
-      btn.style.background = 'rgba(0,39,46,0.92)';
-      btn.style.color = '#8CC63F';
-      btn.style.transform = 'none';
-      btn.style.boxShadow = '0 12px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(140,198,63,0.2)';
-    });
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      launch();
-    });
-    document.body.appendChild(btn);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', addFloatingLauncher);
-  } else {
-    addFloatingLauncher();
-  }
-
-  /* ---------- trigger: keyboard shortcut or ?edit=1 ---------- */
+  /* ---------- trigger: keyboard shortcut or ?edit=1 (editor hidden from public) ---------- */
   document.addEventListener('keydown', function (e) {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
       e.preventDefault();
@@ -400,11 +421,9 @@
         var targetEl = doc.elementFromPoint(dropX, dropY);
 
         Array.from(imageFiles).forEach(function(file) {
-          var reader = new FileReader();
-          reader.onload = function (ev) {
-            var dataUrl = ev.target.result;
+          processImageFile(file, function(dataUrl) {
             addStoredAsset({ src: dataUrl, name: file.name });
-            editor.AssetManager.add({ src: dataUrl, name: file.name });
+            addAssetToGrapes(editor, { src: dataUrl, name: file.name });
 
             var imgEl = null;
             if (targetEl) {
@@ -443,8 +462,7 @@
               });
               toast('✨ Image dropped onto page: ' + file.name);
             }
-          };
-          reader.readAsDataURL(file);
+          });
         });
       });
     });
@@ -471,6 +489,7 @@
           '<div style="font-size:12px;opacity:.65;margin-top:4px">PNG, JPG, WEBP, GIF supported</div>';
 
         var fileInput = uploadBox.querySelector('#zu-gallery-file');
+        fileInput.addEventListener('click', function(e) { e.stopPropagation(); });
         uploadBox.addEventListener('click', function () { fileInput.click(); });
         
         uploadBox.addEventListener('dragover', function(e) { e.preventDefault(); uploadBox.style.borderColor = '#8CC63F'; });
@@ -487,14 +506,11 @@
           Array.from(files).forEach(function(f) {
             if (!f.type.match(/^image\//)) return;
             promises.push(new Promise(function(res) {
-              var r = new FileReader();
-              r.onload = function(ev) {
-                var src = ev.target.result;
+              processImageFile(f, function(src) {
                 addStoredAsset({ src: src, name: f.name });
-                editor.AssetManager.add({ src: src, name: f.name });
+                addAssetToGrapes(editor, { src: src, name: f.name });
                 res();
-              };
-              r.readAsDataURL(f);
+              });
             }));
           });
           Promise.all(promises).then(function() {
@@ -541,7 +557,7 @@
             e.stopPropagation();
             if (confirm('Delete this photo from gallery?')) {
               deleteStoredAsset(asset.src);
-              try { editor.AssetManager.remove(asset.src); } catch (err) {}
+              removeAssetFromGrapes(editor, asset.src);
               toast('🗑️ Photo deleted');
               renderGallery();
             }
@@ -842,6 +858,14 @@
       var innerImgs = component.find ? component.find('img') : [];
       if (isImg || innerImgs.length > 0) {
         openPhotoGallery(component);
+      }
+    });
+
+    /* Override GrapesJS open-assets command */
+    editor.Commands.add('open-assets', {
+      run: function (ed, sender, opts) {
+        var target = (opts && opts.target) ? opts.target : ed.getSelected();
+        openPhotoGallery(target);
       }
     });
 
