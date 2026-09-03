@@ -501,8 +501,9 @@ document.addEventListener('DOMContentLoaded', function() {
   initFilters(STOCK);
 
   // Try to load overrides from site.json
-  fetch('content/site.json', { cache:'no-store' })
-    .then(function(r) { return r.ok ? r.json() : null; })
+  var loadSite = function(url) { return fetch(url, { cache:'no-store' }).then(function(r) { return r.ok ? r.json() : Promise.reject(); }); };
+  loadSite('content/site.json')
+    .catch(function() { return loadSite('/content/site.json'); })
     .then(function(data) {
       if (!data) return;
       if (data.contact) {
