@@ -313,7 +313,7 @@
           { id: 'mobile',  name: 'Mobile',  width: '390px',  widthMedia: '640px' }
         ]
       },
-      canvas: { styles: [FONTS], scripts: [TAILWIND] },
+      canvas: { styles: [FONTS] },
       selectorManager: { componentFirst: true },
       blockManager: { appendTo: undefined }
     });
