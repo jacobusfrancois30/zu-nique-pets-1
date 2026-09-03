@@ -1167,11 +1167,12 @@
     });
   }
 
-  function commitFile(html) {
+  function commitFile(html, retryCount) {
+    retryCount = retryCount || 0;
     var path = repoPath();
     var base = '/repos/' + CONFIG.repo + '/contents/' + path;
 
-    return api(base + '?ref=' + encodeURIComponent(CONFIG.branch))
+    return api(base + '?ref=' + encodeURIComponent(CONFIG.branch) + '&_t=' + Date.now())
       .then(function (res) {
         var sha = res.status === 200 ? res.body.sha : undefined;
         if (res.status !== 200 && res.status !== 404) {
@@ -1189,7 +1190,11 @@
         });
       })
       .then(function (res) {
-        if (res.status === 409) throw new Error('File conflict: please reload the page and redo the edit');
+        if (res.status === 409 && retryCount < 3) {
+          return new Promise(function(resolve) { setTimeout(resolve, 500); }).then(function() {
+            return commitFile(html, retryCount + 1);
+          });
+        }
         if (res.status !== 200 && res.status !== 201) {
           throw new Error(res.body.message || 'GitHub error ' + res.status);
         }
