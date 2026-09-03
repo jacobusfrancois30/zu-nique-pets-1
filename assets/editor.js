@@ -936,10 +936,13 @@
     /* ---------- export ---------- */
     function buildDocument() {
       var head = document.head.cloneNode(true);
-      head.querySelectorAll('link[href*="grapesjs"]').forEach(function (n) { n.remove(); });
+      head.querySelectorAll('link[href*="grapesjs"], script[src*="grapesjs"], script[src*="editor.js"]').forEach(function (n) { n.remove(); });
+      head.querySelectorAll('#grapesjs-injected, style[id*="grapes"]').forEach(function (n) { n.remove(); });
 
       var editorCss = editor.getCss({ avoidProtected: true }) || '';
       var body = editor.getHtml();
+      body = body.replace(/<\/?body[^>]*>/gi, '');
+
       var extra = editorCss.trim() ? '\n<style>/* styles added in visual editor */\n' + editorCss + '\n</style>\n' : '\n';
 
       return '<!DOCTYPE html>\n<html lang="en" class="scroll-smooth">\n<head>\n' +
