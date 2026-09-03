@@ -180,6 +180,7 @@
 
   /* Snapshot of the rendered page */
   function capturePage() {
+    stashScripts();
     var clone = document.body.cloneNode(true);
     clone.querySelectorAll('script').forEach(function (s) { s.remove(); });
     clone.querySelectorAll('#gjs-launcher, #zu-floating-edit-btn, #zu-editor-bar, #zu-context-bar, #gjs, .sr-only, #zu-auth-modal').forEach(function (s) { s.remove(); });
@@ -1115,24 +1116,30 @@
   }
 
   /* Stash inline scripts */
-  (function stashScripts() {
+  function stashScripts() {
+    if (window.__ZU_SCRIPTS__ && window.__ZU_SCRIPTS__.length > 0) return;
     var out = [];
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('script').forEach(function (s) {
-        var raw = s.getAttribute('src');
-        if (raw) {
-          if (/grapesjs/.test(raw)) return;
-          if (/^(https?:)?\/\//i.test(raw)) return;
-          out.push('<script src="' + raw + '"' + (s.defer ? ' defer' : '') + '><\/script>');
-          return;
-        }
-        if (/tailwind\.config/.test(s.textContent || '')) return;
-        var type = s.type ? ' type="' + s.type + '"' : '';
-        out.push('<script' + type + '>' + s.textContent + '<\/script>');
-      });
-      window.__ZU_SCRIPTS__ = out.join('\n');
+    document.querySelectorAll('script').forEach(function (s) {
+      var raw = s.getAttribute('src');
+      if (raw) {
+        if (/grapesjs/.test(raw)) return;
+        if (/editor\.js/.test(raw)) return;
+        if (/cdn\.tailwindcss\.com/.test(raw)) return;
+        out.push('<script src="' + raw + '"' + (s.defer ? ' defer' : '') + '><\/script>');
+        return;
+      }
+      if (/tailwind\.config/.test(s.textContent || '')) return;
+      var type = s.type ? ' type="' + s.type + '"' : '';
+      out.push('<script' + type + '>' + s.textContent + '<\/script>');
     });
-  })();
+    window.__ZU_SCRIPTS__ = out.join('\n');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', stashScripts);
+  } else {
+    stashScripts();
+  }
 
   /* OAuth sign-in removed — PAT-only workflow is more reliable */
   /* The showAuthModal guides users to create a GitHub PAT at */
