@@ -12,7 +12,7 @@
 
 backend:
   name: github
-  repo: francois-ta-tests/zu-nique-pets
+  repo: jacobusfrancois30/zu-nique-pets
   branch: main
   # Cloudflare Pages has no built-in OAuth broker, so Decap uses this worker.
   base_url: https://decap-oauth.jacobusfrancois30.workers.dev
@@ -39,8 +39,6 @@ public_folder: "/assets/images/stock"  # how the site references them
 collections:
   - name: content
     label: "Website"
-    editor:
-      preview: false          # the live site is the preview — open it in a second tab
     files:
       - name: site
         label: "Home page content"
