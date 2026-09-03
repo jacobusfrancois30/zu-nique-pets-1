@@ -244,5 +244,22 @@
     "footer": {
       "blurb": "Ethical exotic pets, custom-built habitats and Akwa aquatics, run by Juanita and Gert in Klerksdorp."
     }
-  }
+  },
+  "stock": [
+    { "id":"s1", "title":"Chinchilla", "category":"mammal", "tag":"Standard grey · Pair available", "available":true, "description":"Soft, inquisitive and handleable. Eating their complete pellet mix reliably. Sold as a bonded pair or individually.", "img":"", "accent":"lime", "whatsapp":"Chinchilla" },
+    { "id":"s2", "title":"Sugar Glider", "category":"mammal", "tag":"Joeys · Weaned", "available":true, "description":"Hand-raised joeys, used to being held. We will walk you through their diet, bonding pouch and nocturnal schedule.", "img":"", "accent":"cyan", "whatsapp":"Sugar Glider" },
+    { "id":"s3", "title":"Cockatiel", "category":"bird", "tag":"Hand-reared · Various mutations", "available":true, "description":"Step-up trained and vocalising. Several colour mutations in stock. Raised by hand from hatch.", "img":"", "accent":"amber", "whatsapp":"Cockatiel" },
+    { "id":"s4", "title":"Lovebird", "category":"bird", "tag":"Peach-faced · Fischer's", "available":true, "description":"Young birds, tame and eating a varied seed and veggie mix. Great starter parrot.", "img":"", "accent":"magenta", "whatsapp":"Lovebird" },
+    { "id":"s5", "title":"Sun Conure", "category":"bird", "tag":"Hand-reared · Limited", "available":true, "description":"Loud, playful and brilliantly coloured. These are fully weaned and step up without hesitation.", "img":"", "accent":"amber", "whatsapp":"Sun Conure" },
+    { "id":"s6", "title":"Bearded Dragon", "category":"reptile", "tag":"Juvenile · CB · Multiple", "available":true, "description":"Captive-bred juveniles, feeding on crickets and greens. Handleable, bright-eyed and alert.", "img":"", "accent":"amber", "whatsapp":"Bearded Dragon" },
+    { "id":"s7", "title":"Leopard Gecko", "category":"reptile", "tag":"Various morphs", "available":true, "description":"Feeding on mealworms and crickets. Calm, easy to handle and a great first reptile.", "img":"", "accent":"lime", "whatsapp":"Leopard Gecko" },
+    { "id":"s8", "title":"Blue-Tongue Skink", "category":"reptile", "tag":"CB Juvenile", "available":true, "description":"Captive-bred, eating fruit, veggie and protein mix. Chunky, docile and surprisingly interactive.", "img":"", "accent":"cyan", "whatsapp":"Blue-Tongue Skink" },
+    { "id":"s9", "title":"Ball Python", "category":"reptile", "tag":"Normal phase · Feeding F/T", "available":true, "description":"Established feeder on frozen-thawed mice. Calm temperament, ideal beginner snake.", "img":"", "accent":"leaf", "whatsapp":"Ball Python" },
+    { "id":"s10", "title":"Leopard Tortoise", "category":"tortoise", "tag":"Permit-compliant · Juveniles", "available":true, "description":"South African species, permit available on your side. We will talk you through the process and the outdoor setup.", "img":"", "accent":"leaf", "whatsapp":"Leopard Tortoise" },
+    { "id":"s11", "title":"Hermann's Tortoise", "category":"tortoise", "tag":"CB · CITES paperwork included", "available":false, "description":"European species, captive-bred with CITES paperwork. Currently out of stock — enquire to be notified.", "img":"", "accent":"amber", "whatsapp":"Hermann's Tortoise" },
+    { "id":"s12", "title":"Freshwater Tropicals", "category":"aquatic", "tag":"Tetras · Guppies · Mollies · Platys", "available":true, "description":"A rotating selection of hardy community fish from the Akwa range. Ask us what is in the tanks this week.", "img":"", "accent":"cyan", "whatsapp":"Tropical Fish" },
+    { "id":"s13", "title":"Planted Aquarium Setup", "category":"aquatic", "tag":"Tank + filter + plants · Ready to go", "available":true, "description":"Starter planted setups: tank, filter, substrate and a selection of easy plants. Cycled and ready for fish.", "img":"", "accent":"leaf", "whatsapp":"Planted Aquarium Setup" },
+    { "id":"s14", "title":"Custom Vivarium Cabinet", "category":"enclosure", "tag":"Built to measure · Timber", "available":true, "description":"Quote based on your species, dimensions and heating. Gert builds them in-house. WhatsApp your measurements.", "img":"", "accent":"magenta", "whatsapp":"Custom Vivarium Cabinet" },
+    { "id":"s15", "title":"Custom Aviary / Flight Cage", "category":"enclosure", "tag":"Custom sizes · Powder-coated mesh", "available":true, "description":"Designed for the species and the space. Indoor and outdoor options. Ask for a quote.", "img":"", "accent":"purple", "whatsapp":"Custom Aviary" }
+  ]
 }

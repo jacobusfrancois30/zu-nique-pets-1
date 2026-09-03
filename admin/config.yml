@@ -176,7 +176,7 @@ collections:
                 widget: select
                 options: [lime, cyan, amber, magenta, leaf, purple]
               - { label: Description, name: text, widget: text }
-              - { label: "Photo (optional)", name: img, widget: string, required: false, hint: "Leave blank to keep the illustrated tile. Upload a photo to assets/images/ and put its path here, e.g. /assets/images/reptiles.jpg" }
+              - { label: "Photo (optional)", name: img, widget: image, required: false, hint: "Click to upload or select a photo. Leave blank to keep the illustrated tile." }
               - { label: "Photo description (accessibility)", name: alt, widget: string }
               - label: "Fallback icon"
                 name: icon
@@ -259,5 +259,5 @@ collections:
               - { label: "Health watch (what to look for, when to see a vet)", name: health, widget: text }
               - { label: "What people get wrong", name: notes, widget: list, hint: "One point per item. Three or four works best." }
               - { label: "Permit note (leave blank if none)", name: permit, widget: text, required: false }
-              - { label: "Photo (optional)", name: img, widget: string, required: false, hint: "Leave blank for the illustrated tile. Otherwise /assets/images/species/your-photo.jpg" }
+              - { label: "Photo (optional)", name: img, widget: image, required: false, hint: "Click to upload or select a photo. Leave blank for the illustrated tile." }
               - { label: "Wikipedia article title", name: wiki, widget: string, hint: "e.g. Pogona vitticeps. Used for the Species background link." }

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Current Stock | Zu-nique Pet Shop, Klerksdorp – Exotic Pets & Animals Available Now</title>
+<meta name="description" content="See what's currently in stock at Zu-nique Pet Shop, Klerksdorp. Hand-reared birds, reptiles, exotic mammals, tortoises and aquatics available now. WhatsApp us to enquire." />
+<meta name="theme-color" content="#00272E" />
+<link rel="icon" href="assets/images/mark.png" />
+<link rel="apple-touch-icon" href="assets/images/mark.png" />
+<link rel="canonical" href="https://zuniquepets.co.za/stock.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Current Stock – Zu-nique Pet Shop Klerksdorp" />
+<meta property="og:description" content="Hand-reared birds, reptiles, exotic mammals, tortoises and aquatics available now at Zu-nique." />
+<meta property="og:image" content="assets/images/logo.png" />
+<meta property="og:url" content="https://zuniquepets.co.za/stock.html" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink:     '#00272E',
+        deep:    '#004350',
+        teal:    '#00596B',
+        surface: '#013741',
+        lime:    '#8CC63F',
+        leaf:    '#4CAF50',
+        cyan:    '#29ABE2',
+        magenta: '#EC008C',
+        purple:  '#92278F',
+        amber:   '#F7941E',
+        cream:   '#F4FAF8'
+      },
+      fontFamily: {
+        display: ['Outfit', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif']
+      },
+      boxShadow: {
+        lift: '0 24px 60px -24px rgba(0, 20, 25, .55)',
+        glow: '0 0 0 1px rgba(140,198,63,.35), 0 18px 50px -18px rgba(140,198,63,.45)'
+      },
+      borderRadius: { '4xl': '2rem' }
+    }
+  }
+}
+</script>
+
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #00272E; }
+  body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4,.font-display { font-family: 'Outfit', system-ui, sans-serif; }
+
+  .brand-wash {
+    background:
+      radial-gradient(60rem 40rem at 12% -10%, rgba(140,198,63,.22), transparent 60%),
+      radial-gradient(50rem 36rem at 88% 6%, rgba(41,171,226,.20), transparent 62%),
+      radial-gradient(46rem 32rem at 70% 92%, rgba(236,0,140,.14), transparent 60%),
+      linear-gradient(180deg, #00272E 0%, #013741 55%, #00272E 100%);
+  }
+  .ring-brand { box-shadow: 0 0 0 1px rgba(255,255,255,.07); }
+  .glass { background: rgba(255,255,255,.045); backdrop-filter: blur(12px); }
+
+  .tile { position: relative; overflow: hidden;
+    background: radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,.07), transparent 62%),
+                linear-gradient(155deg,#013b46 0%, #005b6d 52%, #01262e 100%); }
+  .tile::after { content:""; position:absolute; inset:0; pointer-events:none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 15px 15px; opacity:.45; }
+  .tile > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; z-index:2; transition:opacity .7s ease, transform .7s ease; }
+  .tile > img.loaded { opacity:1; }
+  .stock-card:hover .tile > img.loaded { transform: scale(1.06); }
+  .tile-icon { position:absolute; inset:0; display:grid; place-items:center; z-index:1; }
+
+  .link-underline { background-image: linear-gradient(#8CC63F,#8CC63F); background-size:0% 2px; background-repeat:no-repeat; background-position:0 100%; transition:background-size .3s ease; }
+  .link-underline:hover { background-size:100% 2px; }
+
+  .reveal { opacity:0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+
+  .stock-card { transition: transform .25s ease, box-shadow .25s ease; }
+  .stock-card:hover { transform: translateY(-4px); }
+
+  .filter-tab { transition: all .2s ease; }
+  .filter-tab.active { background: #8CC63F; color: #00272E; box-shadow: 0 0 0 1px rgba(140,198,63,.4), 0 8px 24px -8px rgba(140,198,63,.4); }
+  .filter-tab:not(.active):hover { background: rgba(255,255,255,.08); }
+
+  #search-input:focus { outline: none; border-color: rgba(140,198,63,.6); box-shadow: 0 0 0 3px rgba(140,198,63,.12); }
+
+  .available-badge { animation: pulse-badge 2.5s ease-in-out infinite; }
+  @keyframes pulse-badge { 0%,100% { opacity:1; } 50% { opacity:.7; } }
+
+  .stock-card[data-available="false"] .available-badge { display:none; }
+  .stock-card[data-available="false"] { opacity: .65; }
+
+  ::selection { background: rgba(140,198,63,.35); }
+  #gjs-launcher { font-family:'Outfit',sans-serif; }
+</style>
+</head>
+
+<body class="bg-ink text-cream/90 font-body antialiased">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-3 focus:left-3 focus:bg-lime focus:text-ink focus:px-4 focus:py-2 focus:rounded-full focus:font-semibold">Skip to content</a>
+
+<!-- ============================= HEADER ============================= -->
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div id="nav-shell" class="mt-3 flex items-center justify-between gap-4 rounded-full px-3 py-2 sm:px-4 transition-all duration-300 glass ring-brand">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <img src="assets/images/mark.png" alt="Zu-nique Pet Shop" class="h-11 w-11 sm:h-12 sm:w-12" />
+        <span class="leading-tight">
+          <span class="block font-display font-extrabold text-white text-base sm:text-lg tracking-tight">Zu-nique</span>
+          <span class="block text-[10px] sm:text-[11px] uppercase tracking-[.22em] text-lime/90">Pet Shop</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-cream/80">
+        <a href="stock.html" class="link-underline hover:text-white text-lime font-semibold">Current Stock</a>
+        <a href="index.html#livestock" class="link-underline hover:text-white">Livestock</a>
+        <a href="index.html#habitats" class="link-underline hover:text-white">Custom Habitats</a>
+        <a href="index.html#supplies" class="link-underline hover:text-white">Supplies</a>
+        <a href="care.html" class="link-underline hover:text-white">Care Guide</a>
+        <a href="index.html#visit" class="link-underline hover:text-white">Visit</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a id="nav-whatsapp" href="#" class="hidden sm:inline-flex items-center gap-2 rounded-full bg-lime px-4 py-2.5 text-sm font-semibold text-ink hover:bg-lime/90 transition shadow-glow">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>
+          WhatsApp
+        </a>
+        <button id="menu-btn" aria-label="Open menu" aria-expanded="false" class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition">
+          <svg id="menu-icon" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="lg:hidden hidden mt-2 rounded-3xl glass ring-brand overflow-hidden">
+      <nav class="flex flex-col p-2 text-[15px]">
+        <a href="stock.html" class="rounded-2xl px-4 py-3 bg-lime/10 text-lime font-semibold">Current Stock</a>
+        <a href="index.html#livestock" class="rounded-2xl px-4 py-3 hover:bg-white/10">Livestock</a>
+        <a href="index.html#habitats" class="rounded-2xl px-4 py-3 hover:bg-white/10">Custom Habitats</a>
+        <a href="index.html#supplies" class="rounded-2xl px-4 py-3 hover:bg-white/10">Supplies &amp; Feeders</a>
+        <a href="care.html" class="rounded-2xl px-4 py-3 hover:bg-white/10">Care Guide</a>
+        <a href="index.html#visit" class="rounded-2xl px-4 py-3 hover:bg-white/10">Visit Us</a>
+        <a id="menu-whatsapp" href="#" class="mt-1 rounded-2xl bg-lime px-4 py-3 font-semibold text-ink text-center">Chat on WhatsApp</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================= HERO ============================= -->
+<section class="relative brand-wash pt-28 pb-12 sm:pt-36 sm:pb-16 overflow-hidden">
+  <div class="pointer-events-none absolute -top-32 -left-24 h-[26rem] w-[26rem] rounded-full bg-lime/8 blur-3xl"></div>
+  <div class="pointer-events-none absolute top-10 -right-24 h-[22rem] w-[22rem] rounded-full bg-cyan/8 blur-3xl"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+    <p class="reveal inline-flex items-center gap-2 rounded-full border border-lime/30 bg-lime/10 px-3 py-1.5 text-xs sm:text-[13px] font-semibold text-lime mb-5">
+      <span class="h-1.5 w-1.5 rounded-full bg-lime available-badge"></span>
+      <span id="stock-live-status">Updated regularly — WhatsApp to confirm</span>
+    </p>
+
+    <h1 class="reveal font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4">
+      What's in stock<br />
+      <span class="bg-gradient-to-r from-lime via-cyan to-magenta bg-clip-text text-transparent">right now</span>
+    </h1>
+    <p class="reveal mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-cream/65 mb-8">
+      Stock changes week to week. Everything listed here has been properly housed and is feeding reliably before we offer it.
+      WhatsApp us to confirm availability or ask any questions before you visit.
+    </p>
+
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a id="hero-whatsapp" href="#" class="inline-flex items-center gap-2.5 rounded-full bg-lime px-6 py-3.5 font-semibold text-ink hover:bg-lime/90 transition shadow-glow">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>
+        Enquire on WhatsApp
+      </a>
+      <a href="index.html" class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3.5 font-semibold text-white hover:bg-white/10 transition">
+        ← Back to main site
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= STOCK GRID ============================= -->
+<section id="stock-section" class="py-12 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    <!-- Search + Filter -->
+    <div class="reveal mb-8 flex flex-col gap-4">
+      <!-- Search -->
+      <div class="relative">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cream/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input id="search-input" type="search" placeholder="Search by name or description…"
+          class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-cream placeholder-cream/35 transition"
+          aria-label="Search stock" />
+      </div>
+
+      <!-- Category tabs -->
+      <div class="flex flex-wrap gap-2" id="filter-tabs" role="tablist" aria-label="Filter by category">
+        <button class="filter-tab active rounded-full px-5 py-2 text-sm font-semibold border border-transparent" data-cat="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="mammal" role="tab" aria-selected="false">🐾 Mammals</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="bird" role="tab" aria-selected="false">🦜 Birds</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="reptile" role="tab" aria-selected="false">🦎 Reptiles</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="tortoise" role="tab" aria-selected="false">🐢 Tortoises</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="aquatic" role="tab" aria-selected="false">🐠 Aquatics</button>
+        <button class="filter-tab rounded-full px-5 py-2 text-sm font-semibold border border-white/10 text-cream/70" data-cat="enclosure" role="tab" aria-selected="false">📦 Enclosures</button>
+      </div>
+
+      <!-- Result count -->
+      <p id="result-count" class="text-sm text-cream/40 mt-1"></p>
+    </div>
+
+    <!-- Grid -->
+    <div id="stock-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden py-24 text-center">
+      <p class="text-5xl mb-4">🔍</p>
+      <p class="font-display text-xl font-semibold text-white mb-2">Nothing matches that search</p>
+      <p class="text-cream/50 mb-6">Try a different category or keyword, or WhatsApp us to ask what's in today.</p>
+      <a id="empty-whatsapp" href="#" class="inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 font-semibold text-ink hover:bg-lime/90 transition">
+        Ask on WhatsApp
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================= CTA STRIP ============================= -->
+<section class="py-14 sm:py-20">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+    <div class="reveal rounded-4xl glass ring-brand p-10 sm:p-14">
+      <p class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-3">Don't see what you're after?</p>
+      <p class="text-cream/60 leading-relaxed mb-8 max-w-xl mx-auto">
+        Stock changes weekly. Send us a message with what you're looking for and we'll let you know as soon as something comes in.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a id="cta-whatsapp" href="#" class="inline-flex items-center justify-center gap-2.5 rounded-full bg-lime px-7 py-3.5 font-semibold text-ink hover:bg-lime/90 transition shadow-glow">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>
+          WhatsApp Juanita
+        </a>
+        <a id="cta-call" href="tel:+27798200108" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0-.6.4-1 1-1h2.3c.5 0 .9.3 1 .8l.8 3c.1.4 0 .8-.4 1L7 10.2a12 12 0 0 0 6.8 6.8l1.4-1.7c.2-.3.6-.5 1-.4l3 .8c.5.1.8.5.8 1V19c0 .6-.4 1-1 1h-1A16 16 0 0 1 4 6V5z"/></svg>
+          Call 079 820 0108
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="border-t border-white/[.06] py-10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-cream/40">
+      <p>© <span id="year"></span> Zu-nique Pet Shop · Klerksdorp · Inside Eden Garden Centre</p>
+      <nav class="flex gap-5">
+        <a href="index.html" class="hover:text-cream/70 transition">Home</a>
+        <a href="care.html" class="hover:text-cream/70 transition">Care Guide</a>
+        <a id="footer-whatsapp" href="#" class="hover:text-cream/70 transition">WhatsApp</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a id="float-whatsapp" href="#" aria-label="Chat on WhatsApp"
+   class="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-lime shadow-glow hover:scale-110 transition-transform">
+  <svg viewBox="0 0 24 24" class="h-7 w-7" fill="#00272E" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>
+</a>
+
+<script>
+/* =====================================================================
+   STOCK PAGE — data-driven animal grid with filter + search
+   Stock data lives in content/site.json under "stock" array.
+   ===================================================================== */
+
+var WA_NUMBER = '27798200108';
+var WA_MSG_DEFAULT = "Hi Zu-nique! I'd like to ask about ";
+
+/* Default stock data — overridden by content/site.json if available */
+var STOCK = [
+  /* MAMMALS */
+  { id:'s1', title:'Chinchilla', category:'mammal', tag:'Standard grey · Pair available', available:true,
+    description:'Soft, inquisitive and handleable. Eating their complete pellet mix reliably. Sold as a bonded pair or individually.',
+    img:'', accent:'lime', whatsapp:'Chinchilla' },
+  { id:'s2', title:'Sugar Glider', category:'mammal', tag:'Joeys · Weaned', available:true,
+    description:'Hand-raised joeys, used to being held. We will walk you through their diet, bonding pouch and nocturnal schedule.',
+    img:'', accent:'cyan', whatsapp:'Sugar Glider' },
+
+  /* BIRDS */
+  { id:'s3', title:'Cockatiel', category:'bird', tag:'Hand-reared · Various mutations', available:true,
+    description:'Step-up trained and vocalising. Several colour mutations in stock. Raised by hand from hatch.',
+    img:'', accent:'amber', whatsapp:'Cockatiel' },
+  { id:'s4', title:'Lovebird', category:'bird', tag:'Peach-faced · Fischer\'s', available:true,
+    description:'Young birds, tame and eating a varied seed and veggie mix. Great starter parrot.',
+    img:'', accent:'magenta', whatsapp:'Lovebird' },
+  { id:'s5', title:'Sun Conure', category:'bird', tag:'Hand-reared · Limited', available:true,
+    description:'Loud, playful and brilliantly coloured. These are fully weaned and step up without hesitation.',
+    img:'', accent:'amber', whatsapp:'Sun Conure' },
+
+  /* REPTILES */
+  { id:'s6', title:'Bearded Dragon', category:'reptile', tag:'Juvenile · CB · Multiple', available:true,
+    description:'Captive-bred juveniles, feeding on crickets and greens. Handleable, bright-eyed and alert.',
+    img:'', accent:'amber', whatsapp:'Bearded Dragon' },
+  { id:'s7', title:'Leopard Gecko', category:'reptile', tag:'Various morphs', available:true,
+    description:'Feeding on mealworms and crickets. Calm, easy to handle and a great first reptile.',
+    img:'', accent:'lime', whatsapp:'Leopard Gecko' },
+  { id:'s8', title:'Blue-Tongue Skink', category:'reptile', tag:'CB Juvenile', available:true,
+    description:'Captive-bred, eating fruit, veggie and protein mix. Chunky, docile and surprisingly interactive.',
+    img:'', accent:'cyan', whatsapp:'Blue-Tongue Skink' },
+  { id:'s9', title:'Ball Python', category:'reptile', tag:'Normal phase · Feeding F/T', available:true,
+    description:'Established feeder on frozen-thawed mice. Calm temperament, ideal beginner snake.',
+    img:'', accent:'deep', whatsapp:'Ball Python' },
+
+  /* TORTOISES */
+  { id:'s10', title:'Leopard Tortoise', category:'tortoise', tag:'Permit-compliant · Juveniles', available:true,
+    description:'South African species, permit available on your side. We will talk you through the process and the outdoor setup.',
+    img:'', accent:'leaf', whatsapp:'Leopard Tortoise' },
+  { id:'s11', title:'Hermann\'s Tortoise', category:'tortoise', tag:'CB · CITES paperwork included', available:false,
+    description:'European species, captive-bred with CITES paperwork. Currently out of stock — enquire to be notified.',
+    img:'', accent:'amber', whatsapp:"Hermann's Tortoise" },
+
+  /* AQUATICS */
+  { id:'s12', title:'Freshwater Tropicals', category:'aquatic', tag:'Tetras · Guppies · Mollies · Platys', available:true,
+    description:'A rotating selection of hardy community fish from the Akwa range. Ask us what is in the tanks this week.',
+    img:'', accent:'cyan', whatsapp:'Tropical Fish' },
+  { id:'s13', title:'Planted Aquarium Setup', category:'aquatic', tag:'Tank + filter + plants · Ready to go', available:true,
+    description:'Starter planted setups: tank, filter, substrate and a selection of easy plants. Cycled and ready for fish.',
+    img:'', accent:'leaf', whatsapp:'Planted Aquarium Setup' },
+
+  /* ENCLOSURES */
+  { id:'s14', title:'Custom Vivarium Cabinet', category:'enclosure', tag:'Built to measure · Timber', available:true,
+    description:'Quote based on your species, dimensions and heating. Gert builds them in-house. WhatsApp your measurements.',
+    img:'', accent:'magenta', whatsapp:'Custom Vivarium Cabinet' },
+  { id:'s15', title:'Aviary / Flight Cage', category:'enclosure', tag:'Custom sizes · Powder-coated mesh', available:true,
+    description:'Designed for the species and the space. Indoor and outdoor options. Ask for a quote.',
+    img:'', accent:'purple', whatsapp:'Custom Aviary' },
+];
+
+/* Category accent colours */
+var ACCENTS = {
+  lime:    { bg:'rgba(140,198,63,.12)',  ring:'rgba(140,198,63,.3)',  text:'#8CC63F' },
+  cyan:    { bg:'rgba(41,171,226,.12)',  ring:'rgba(41,171,226,.3)',  text:'#29ABE2' },
+  amber:   { bg:'rgba(247,148,30,.12)', ring:'rgba(247,148,30,.3)',  text:'#F7941E' },
+  magenta: { bg:'rgba(236,0,140,.12)',  ring:'rgba(236,0,140,.3)',   text:'#EC008C' },
+  purple:  { bg:'rgba(146,39,143,.12)', ring:'rgba(146,39,143,.3)',  text:'#92278F' },
+  leaf:    { bg:'rgba(76,175,80,.12)',   ring:'rgba(76,175,80,.3)',   text:'#4CAF50' },
+  deep:    { bg:'rgba(0,67,80,.3)',      ring:'rgba(41,171,226,.2)',  text:'#29ABE2' },
+};
+
+var CAT_ICONS = {
+  mammal: '🐾', bird: '🦜', reptile: '🦎', tortoise: '🐢', aquatic: '🐠', enclosure: '📦'
+};
+
+/* ---- render ---- */
+function buildCard(item) {
+  var ac = ACCENTS[item.accent] || ACCENTS.lime;
+  var wa = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_MSG_DEFAULT + item.whatsapp + ' I saw on your website.');
+  var availBadge = item.available
+    ? '<span class="available-badge inline-flex items-center gap-1 text-[11px] font-semibold text-lime bg-lime/12 border border-lime/25 rounded-full px-2.5 py-0.5"><span class="h-1.5 w-1.5 rounded-full bg-lime"></span>In stock</span>'
+    : '<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-cream/40 bg-white/5 border border-white/10 rounded-full px-2.5 py-0.5">Currently out</span>';
+
+  return '<article class="stock-card group rounded-3xl overflow-hidden ring-brand flex flex-col" data-cat="' + item.category + '" data-available="' + item.available + '" data-title="' + item.title.toLowerCase() + '" data-desc="' + item.description.toLowerCase() + '" style="background:rgba(255,255,255,.03)">' +
+    '<div class="tile aspect-[4/3] shrink-0" style="box-shadow:inset 0 0 0 1px ' + ac.ring + '">' +
+      (item.img ? '<img data-src="' + item.img + '" alt="' + item.title + ' at Zu-nique Pet Shop" />' : '') +
+      '<div class="tile-icon">' +
+        '<span style="font-size:4rem;filter:drop-shadow(0 4px 18px rgba(0,0,0,.5))">' + (CAT_ICONS[item.category] || '🐾') + '</span>' +
+      '</div>' +
+      '<div class="tile-glow top-0 left-0" style="background:' + ac.text + '"></div>' +
+    '</div>' +
+    '<div class="flex flex-col flex-1 p-5">' +
+      '<div class="flex items-start justify-between gap-2 mb-2">' +
+        '<h3 class="font-display font-bold text-lg text-white leading-snug">' + item.title + '</h3>' +
+        availBadge +
+      '</div>' +
+      '<p class="text-[12px] font-semibold uppercase tracking-widest mb-2" style="color:' + ac.text + '">' + item.tag + '</p>' +
+      '<p class="text-sm text-cream/60 leading-relaxed flex-1 mb-4">' + item.description + '</p>' +
+      '<a href="' + wa + '" target="_blank" rel="noopener" ' +
+        'class="mt-auto flex items-center justify-center gap-2 rounded-2xl py-2.5 text-sm font-semibold transition" ' +
+        'style="background:' + ac.bg + ';color:' + ac.text + ';border:1px solid ' + ac.ring + '">' +
+        '<svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>' +
+        'Enquire on WhatsApp' +
+      '</a>' +
+    '</div>' +
+  '</article>';
+}
+
+var currentCat = 'all';
+var currentSearch = '';
+
+function renderStock(data) {
+  var grid = document.getElementById('stock-grid');
+  var empty = document.getElementById('empty-state');
+  var count = document.getElementById('result-count');
+
+  var filtered = data.filter(function(item) {
+    var catMatch = currentCat === 'all' || item.category === currentCat;
+    var q = currentSearch.trim().toLowerCase();
+    var searchMatch = !q || item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q) || item.tag.toLowerCase().includes(q);
+    return catMatch && searchMatch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    count.textContent = '';
+  } else {
+    empty.classList.add('hidden');
+    grid.innerHTML = filtered.map(buildCard).join('');
+    count.textContent = filtered.length + ' item' + (filtered.length === 1 ? '' : 's') + ' shown';
+    // Lazy load images
+    grid.querySelectorAll('img[data-src]').forEach(function(img) {
+      img.loading = 'lazy'; img.decoding = 'async';
+      img.addEventListener('load', function() { img.classList.add('loaded'); }, { once: true });
+      img.addEventListener('error', function() { img.remove(); }, { once: true });
+      img.src = img.getAttribute('data-src');
+    });
+  }
+}
+
+function initFilters(data) {
+  document.getElementById('filter-tabs').addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-cat]');
+    if (!btn) return;
+    document.querySelectorAll('.filter-tab').forEach(function(t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+      t.classList.add('text-cream/70');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    btn.classList.remove('text-cream/70');
+    currentCat = btn.getAttribute('data-cat');
+    renderStock(data);
+  });
+
+  var searchEl = document.getElementById('search-input');
+  var debounce;
+  searchEl.addEventListener('input', function() {
+    clearTimeout(debounce);
+    debounce = setTimeout(function() {
+      currentSearch = searchEl.value;
+      renderStock(data);
+    }, 200);
+  });
+}
+
+function wireWhatsApp(number, msg) {
+  var wa = 'https://wa.me/' + number + '?text=' + encodeURIComponent(msg);
+  ['nav-whatsapp','menu-whatsapp','hero-whatsapp','cta-whatsapp','float-whatsapp','footer-whatsapp','empty-whatsapp']
+    .forEach(function(id) { var el = document.getElementById(id); if (el) el.href = wa; });
+}
+
+function initReveal() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:.08 });
+  els.forEach(function(el, i) { el.style.transitionDelay = Math.min(i % 6, 5) * 60 + 'ms'; io.observe(el); });
+}
+
+function initNav() {
+  var shell = document.getElementById('nav-shell');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 24) shell.classList.add('bg-ink/85','shadow-lift');
+    else shell.classList.remove('bg-ink/85','shadow-lift');
+  }, { passive:true });
+  var btn = document.getElementById('menu-btn');
+  var menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', function() {
+    var open = menu.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  initNav();
+  initReveal();
+  wireWhatsApp(WA_NUMBER, WA_MSG_DEFAULT);
+  renderStock(STOCK);
+  initFilters(STOCK);
+
+  // Try to load overrides from site.json
+  fetch('content/site.json', { cache:'no-store' })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data) return;
+      if (data.contact) {
+        WA_NUMBER = data.contact.whatsapp || WA_NUMBER;
+        WA_MSG_DEFAULT = data.contact.whatsappMessage || WA_MSG_DEFAULT;
+        wireWhatsApp(WA_NUMBER, WA_MSG_DEFAULT);
+      }
+      if (Array.isArray(data.stock) && data.stock.length > 0) {
+        STOCK.length = 0;
+        data.stock.forEach(function(s) { STOCK.push(s); });
+        renderStock(STOCK);
+        initFilters(STOCK);
+      }
+    })
+    .catch(function() {});
+});
+</script>
+
+<!-- ================= VISUAL EDITOR (GrapesJS) ================= -->
+<script src="assets/editor.js" defer></script>
+
+</body>
+</html>
