@@ -1,0 +1,265 @@
+# =====================================================================
+# Decap CMS — Zu-nique Pet Shop
+# ---------------------------------------------------------------------
+# Everything edited here is committed straight back to GitHub as
+# content/site.json. Cloudflare Pages rebuilds on the commit and the live
+# site picks the change up on the next page load. No database, no cost.
+#
+# Configured for jacobusfrancois30/zu-nique-pets on Cloudflare Pages, with the
+# OAuth broker already running as a Cloudflare Worker. Nothing here needs
+# changing unless the repo, the branch or the worker URL changes.
+# =====================================================================
+
+backend:
+  name: github
+  repo: jacobusfrancois30/zu-nique-pets
+  branch: main
+  # Cloudflare Pages has no built-in OAuth broker, so Decap uses this worker.
+  base_url: https://divine-math-b409.jacobusfrancois30.workers.dev
+  auth_endpoint: auth
+
+  # --- Alternative: Netlify Identity / Git Gateway -------------------
+  # If you would rather host the admin on Netlify, replace the four lines
+  # above with:
+  #   name: git-gateway
+  #   branch: main
+
+# Lets you run the CMS locally against your working copy:
+#   npx decap-server     (then open http://localhost:8080/admin/)
+local_backend: true
+
+publish_mode: simple          # save = commit straight to `branch`
+site_url: https://zuniquepets.co.za
+display_url: https://zuniquepets.co.za
+logo_url: /assets/images/logo.png
+
+media_folder: "assets/images/stock"    # where uploaded images are committed
+public_folder: "/assets/images/stock"  # how the site references them
+
+collections:
+  - name: content
+    label: "Website"
+    editor:
+      preview: false          # the live site is the preview — open it in a second tab
+    files:
+      - name: site
+        label: "Home page content"
+        file: "content/site.json"
+        format: json
+        fields:
+
+          # ---------------- brand ----------------
+          - label: "Brand"
+            name: brand
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Name (top line)", name: name, widget: string }
+              - { label: "Sub-line", name: sub, widget: string }
+
+          # ---------------- contact ----------------
+          - label: "Contact details"
+            name: contact
+            widget: object
+            fields:
+              - { label: "WhatsApp number (international, digits only)", name: whatsapp, widget: string, hint: "e.g. 27798200108 — no plus sign, no spaces" }
+              - { label: "WhatsApp pre-filled message", name: whatsappMessage, widget: string }
+              - { label: "Person 1 — name", name: name1, widget: string }
+              - { label: "Person 1 — number shown", name: phone1, widget: string }
+              - { label: "Person 1 — dial number", name: tel1, widget: string, hint: "e.g. +27798200108" }
+              - { label: "Person 2 — name", name: name2, widget: string }
+              - { label: "Person 2 — number shown", name: phone2, widget: string }
+              - { label: "Person 2 — dial number", name: tel2, widget: string }
+              - { label: "Hero call-button label", name: primaryLabel, widget: string }
+              - { label: "Street address", name: address, widget: text }
+              - { label: "Google Maps search text", name: mapsQuery, widget: string }
+              - { label: "Facebook page URL", name: facebook, widget: string }
+
+          # ---------------- hours ----------------
+          - label: "Opening hours"
+            name: hours
+            widget: object
+            fields:
+              - { label: "Hero card — Mon to Fri", name: weekdays, widget: string }
+              - { label: "Hero card — Saturday", name: saturday, widget: string }
+              - { label: "Hero card — Sunday", name: sunday, widget: string }
+              - { label: "Footnote", name: note, widget: string }
+              - label: "Weekly schedule"
+                name: schedule
+                widget: list
+                hint: "Keep these seven rows in order, starting with Sunday — the open/closed badge is calculated from them."
+                fields:
+                  - { label: "Day", name: day, widget: string }
+                  - { label: "Opens (24h)", name: open, widget: string, pattern: ['^\d{2}:\d{2}$', 'Use HH:MM, e.g. 08:30'] }
+                  - { label: "Closes (24h)", name: close, widget: string, pattern: ['^\d{2}:\d{2}$', 'Use HH:MM, e.g. 17:00'] }
+
+          # ---------------- hero ----------------
+          - label: "Hero section"
+            name: hero
+            widget: object
+            fields:
+              - { label: "Badge text", name: badge, widget: string }
+              - { label: "Headline line 1", name: title1, widget: string }
+              - { label: "Headline line 2 (coloured)", name: title2, widget: string }
+              - { label: "Headline line 3", name: title3, widget: string }
+              - { label: "Intro paragraph", name: subtitle, widget: text }
+
+          # ---------------- section copy ----------------
+          - label: "Section headings"
+            name: sections
+            widget: object
+            collapsed: true
+            fields:
+              - label: "Livestock"
+                name: livestock
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Intro, name: intro, widget: text }
+              - label: "Custom habitats"
+                name: habitats
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Intro, name: intro, widget: text }
+              - label: "Supplies"
+                name: supplies
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Intro, name: intro, widget: text }
+              - label: "Care advice"
+                name: care
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Intro, name: intro, widget: text }
+              - label: "Visit us"
+                name: visit
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Intro, name: intro, widget: text }
+              - label: "Closing call to action"
+                name: cta
+                widget: object
+                fields:
+                  - { label: Heading, name: title, widget: string }
+                  - { label: Sub-heading, name: subtitle, widget: text }
+              - label: "Footer"
+                name: footer
+                widget: object
+                fields:
+                  - { label: "Footer blurb", name: blurb, widget: text }
+
+          # ---------------- trust strip ----------------
+          - label: "Trust strip (four points under the hero)"
+            name: trust
+            widget: list
+            collapsed: true
+            fields:
+              - label: Icon
+                name: icon
+                widget: select
+                options: [shield, hand, tools, chat, paw, feather, lizard, shell, fish, box, cricket, leafy, drop, bulb, filter, plant]
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+
+          # ---------------- livestock cards ----------------
+          - label: "Livestock cards"
+            name: livestock
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: "Tag (small pill on the photo)", name: tag, widget: string }
+              - label: "Accent colour"
+                name: accent
+                widget: select
+                options: [lime, cyan, amber, magenta, leaf, purple]
+              - { label: Description, name: text, widget: text }
+              - { label: "Photo (optional)", name: img, widget: string, required: false, hint: "Leave blank to keep the illustrated tile. Upload a photo to assets/images/ and put its path here, e.g. /assets/images/reptiles.jpg" }
+              - { label: "Photo description (accessibility)", name: alt, widget: string }
+              - label: "Fallback icon"
+                name: icon
+                widget: select
+                options: [paw, feather, lizard, shell, fish, box, plant, leafy]
+                hint: "Shown if the photo cannot load."
+
+          # ---------------- habitat bullet points ----------------
+          - label: "Custom habitat bullet points"
+            name: habitatPoints
+            widget: list
+            collapsed: true
+
+          # ---------------- supplies ----------------
+          - label: "Supplies & feeders"
+            name: supplies
+            widget: list
+            summary: "{{fields.title}}"
+            collapsed: true
+            fields:
+              - label: Icon
+                name: icon
+                widget: select
+                options: [cricket, leafy, drop, bulb, filter, plant, paw, feather, lizard, shell, fish, box, shield, hand, tools, chat]
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - label: "Accent colour"
+                name: accent
+                widget: select
+                options: [lime, cyan, amber, magenta, leaf, purple]
+
+          # ---------------- FAQs ----------------
+          - label: "Frequently asked questions"
+            name: faqs
+            widget: list
+            summary: "{{fields.q}}"
+            collapsed: true
+            fields:
+              - { label: Question, name: q, widget: string }
+              - { label: Answer, name: a, widget: text }
+
+      # =============================================================
+      # Care guide species. Each record renders one card on /care.html
+      # =============================================================
+      - name: species
+        label: "Care guide species"
+        file: "content/species.json"
+        format: json
+        fields:
+          - label: "Species"
+            name: species
+            widget: list
+            summary: "{{fields.name}}  ({{fields.sci}})"
+            fields:
+              - { label: "ID (used in the page link, lowercase, no spaces)", name: id, widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and hyphens only'] }
+              - label: "Group"
+                name: group
+                widget: select
+                options:
+                  - { label: "Fish & aquatics", value: aquatics }
+                  - { label: "Reptiles & tortoises", value: reptiles }
+                  - { label: "Amphibians", value: amphibians }
+                  - { label: "Birds", value: birds }
+                  - { label: "Small mammals", value: mammals }
+                  - { label: "Tarantulas & inverts", value: inverts }
+              - { label: "Common name", name: name, widget: string }
+              - { label: "Scientific name", name: sci, widget: string }
+              - label: "Experience level"
+                name: level
+                widget: select
+                options: [Beginner, Intermediate, Advanced, Specialist]
+              - { label: "Adult size", name: size, widget: string }
+              - { label: "Lifespan", name: life, widget: string }
+              - { label: "Minimum housing", name: home, widget: text }
+              - { label: "Temperature", name: temp, widget: text }
+              - { label: "Environment (humidity, or water chemistry for fish)", name: env, widget: text }
+              - { label: "UVB and lighting", name: light, widget: text }
+              - { label: "Substrate, bedding or decor", name: substrate, widget: text }
+              - { label: "Diet", name: diet, widget: text }
+              - { label: "Health watch (what to look for, when to see a vet)", name: health, widget: text }
+              - { label: "What people get wrong", name: notes, widget: list, hint: "One point per item. Three or four works best." }
+              - { label: "Permit note (leave blank if none)", name: permit, widget: text, required: false }
+              - { label: "Photo (optional)", name: img, widget: string, required: false, hint: "Leave blank for the illustrated tile. Otherwise /assets/images/species/your-photo.jpg" }
+              - { label: "Wikipedia article title", name: wiki, widget: string, hint: "e.g. Pogona vitticeps. Used for the Species background link." }

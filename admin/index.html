@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Zu-nique Pet Shop — Content Manager</title>
+  <link rel="icon" href="/assets/images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    body { margin: 0; background: #00272E; font-family: 'Outfit', system-ui, sans-serif; }
+    #boot {
+      position: fixed; inset: 0; display: grid; place-items: center; text-align: center;
+      color: #F4FAF8; padding: 2rem; z-index: 0;
+    }
+    #boot img { width: 84px; height: 84px; border-radius: 999px; object-fit: cover; }
+    #boot h1 { margin: 18px 0 6px; font-size: 20px; font-weight: 800; }
+    #boot p { margin: 0; opacity: .6; font-size: 14px; max-width: 30rem; line-height: 1.6; }
+    /* Decap mounts above this once it loads */
+    #nc-root { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="boot">
+    <div>
+      <img src="/assets/images/logo.png" alt="Zu-nique Pet Shop" onerror="this.remove()" />
+      <h1>Loading the content manager&hellip;</h1>
+      <p>If this message stays on screen, check that <code>admin/config.yml</code> has your GitHub repository
+         and OAuth worker URL filled in.</p>
+    </div>
+  </div>
+
+  <!-- Decap CMS (the maintained successor to Netlify CMS) -->
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.8.3/dist/decap-cms.js"></script>
+
+  <script>
+    // Open the live site in a new tab from the CMS "eye" icon rather than
+    // rendering an inline preview, which would need a duplicate template.
+    window.CMS_MANUAL_INIT = false;
+
+    // Hide the boot message once the CMS has mounted.
+    var tries = 0;
+    var poll = setInterval(function () {
+      if (document.querySelector('#nc-root, .css-1yvj3rf, [class*="AppMainContainer"]') || ++tries > 40) {
+        var b = document.getElementById('boot');
+        if (b && document.body.children.length > 2) b.remove();
+        if (tries > 40) clearInterval(poll);
+      }
+    }, 500);
+  </script>
+</body>
+</html>

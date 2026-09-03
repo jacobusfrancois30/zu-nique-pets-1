@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pet Care Guide | Zu-nique Pet Shop, Klerksdorp</title>
+<meta name="description" content="Care guides for fish, reptiles, amphibians, birds, small mammals and tarantulas. Housing, temperature, humidity, diet and lifespan for every species we keep, written by Zu-nique Pet Shop in Klerksdorp." />
+<meta name="theme-color" content="#00272E" />
+<link rel="icon" href="assets/images/mark.png" />
+<link rel="apple-touch-icon" href="assets/images/mark.png" />
+<link rel="canonical" href="https://zuniquepets.co.za/care.html" />
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Pet care guide: fish, reptiles, amphibians, birds, mammals and tarantulas" />
+<meta property="og:description" content="Housing, temperature, humidity, diet and lifespan for every species we keep. From Zu-nique Pet Shop, Klerksdorp." />
+<meta property="og:image" content="assets/images/logo.png" />
+<meta property="og:url" content="https://zuniquepets.co.za/care.html" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink:     '#00272E',
+        deep:    '#004350',
+        teal:    '#00596B',
+        surface: '#013741',
+        lime:    '#8CC63F',
+        leaf:    '#4CAF50',
+        cyan:    '#29ABE2',
+        magenta: '#EC008C',
+        purple:  '#92278F',
+        amber:   '#F7941E',
+        cream:   '#F4FAF8'
+      },
+      fontFamily: {
+        display: ['Outfit', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif']
+      },
+      boxShadow: {
+        lift: '0 24px 60px -24px rgba(0, 20, 25, .55)',
+        glow: '0 0 0 1px rgba(140,198,63,.35), 0 18px 50px -18px rgba(140,198,63,.45)'
+      },
+      borderRadius: { '4xl': '2rem' }
+    }
+  }
+}
+</script>
+
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #00272E; }
+  body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4,.font-display { font-family: 'Outfit', system-ui, sans-serif; }
+
+  /* Brand gradients pulled from the logo's colour wheel */
+  .brand-wash {
+    background:
+      radial-gradient(60rem 40rem at 12% -10%, rgba(140,198,63,.22), transparent 60%),
+      radial-gradient(50rem 36rem at 88% 6%, rgba(41,171,226,.20), transparent 62%),
+      radial-gradient(46rem 32rem at 70% 92%, rgba(236,0,140,.14), transparent 60%),
+      linear-gradient(180deg, #00272E 0%, #013741 55%, #00272E 100%);
+  }
+  .ring-brand { box-shadow: 0 0 0 1px rgba(255,255,255,.07); }
+  .glass { background: rgba(255,255,255,.045); backdrop-filter: blur(12px); }
+
+  /* Photo tile: a branded gradient sits behind every photo, so the layout still
+     looks intentional if an image is slow, blocked or not yet replaced. */
+  /* Tiles are drawn, not photographed: layered brand colour behind a large
+     line icon. A photo dropped into the same tile simply covers the artwork,
+     so real shop photos can be added one at a time without a redesign. */
+  .tile { position: relative; overflow: hidden;
+    background: radial-gradient(120% 90% at 18% 8%, rgba(255,255,255,.07), transparent 62%),
+                linear-gradient(155deg,#013b46 0%, #005b6d 52%, #01262e 100%); }
+  .tile::after { content:""; position:absolute; inset:0; pointer-events:none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 15px 15px; opacity:.45; }
+  .tile-glow { position:absolute; width:72%; aspect-ratio:1; border-radius:999px; filter:blur(42px); opacity:.42; pointer-events:none; }
+  .tile > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; z-index:2; transition:opacity .7s ease, transform .7s ease; }
+  .tile > img.loaded { opacity:1; }
+  .group:hover .tile > img.loaded { transform: scale(1.06); }
+  .tile-icon { position:absolute; inset:0; display:grid; place-items:center; z-index:1; }
+  .group:hover .tile-icon { transform: scale(1.05); transition: transform .5s ease; }
+
+  .link-underline { background-image: linear-gradient(#8CC63F,#8CC63F); background-size:0% 2px; background-repeat:no-repeat; background-position:0 100%; transition:background-size .3s ease; }
+  .link-underline:hover { background-size:100% 2px; }
+
+  .reveal { opacity:0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+
+  details > summary { list-style:none; cursor:pointer; }
+  details > summary::-webkit-details-marker { display:none; }
+  details[open] .faq-plus { transform: rotate(45deg); }
+
+  ::selection { background: rgba(140,198,63,.35); }
+  /* Editor-mode chrome */
+  #gjs-launcher { font-family:'Outfit',sans-serif; }
+</style>
+<style>
+  .chip { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+  mark { background: rgba(140,198,63,.28); color: #F4FAF8; border-radius: 3px; padding: 0 2px; }
+  .spec-row { display: grid; grid-template-columns: 8.5rem 1fr; gap: .75rem; }
+  @media (max-width: 480px) { .spec-row { grid-template-columns: 1fr; gap: .1rem; } }
+</style>
+</head>
+
+<body class="bg-ink text-cream/90 font-body antialiased">
+
+<a href="#results" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-3 focus:left-3 focus:bg-lime focus:text-ink focus:px-4 focus:py-2 focus:rounded-full focus:font-semibold">Skip to the guides</a>
+
+<!-- ============================= HEADER ============================= -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div id="nav-shell" class="mt-3 flex items-center justify-between gap-4 rounded-full px-3 py-2 sm:px-4 transition-all duration-300 glass ring-brand">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <img src="assets/images/mark.png" alt="Zu-nique Pet Shop" class="h-11 w-11 sm:h-12 sm:w-12" />
+        <span class="leading-tight">
+          <span class="block font-display font-extrabold text-white text-base sm:text-lg tracking-tight">Zu-nique</span>
+          <span class="block text-[10px] sm:text-[11px] uppercase tracking-[.22em] text-lime/90">Pet Shop</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-cream/80">
+        <a href="index.html#livestock" class="link-underline hover:text-white">Livestock</a>
+        <a href="index.html#habitats" class="link-underline hover:text-white">Custom Habitats</a>
+        <a href="index.html#supplies" class="link-underline hover:text-white">Supplies</a>
+        <a href="care.html" class="text-lime font-semibold">Care Guide</a>
+        <a href="#guides" class="link-underline hover:text-white">The Basics</a>
+        <a href="index.html#visit" class="link-underline hover:text-white">Visit</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a id="nav-whatsapp" href="#" class="inline-flex items-center gap-2 rounded-full bg-lime px-4 py-2.5 text-sm font-semibold text-ink hover:bg-lime/90 transition shadow-glow">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96s-.47-.15-.67.15-.77.96-.94 1.16-.35.22-.65.07a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.61s.3-.35.45-.52a2 2 0 0 0 .3-.5.55.55 0 0 0 0-.53c0-.15-.67-1.6-.92-2.2s-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.34 3.34 0 0 0-1.04 2.48 5.8 5.8 0 0 0 1.21 3.07 13.27 13.27 0 0 0 5.09 4.49c.71.3 1.26.49 1.7.63a4.1 4.1 0 0 0 1.87.12 3.06 3.06 0 0 0 2.01-1.42 2.5 2.5 0 0 0 .17-1.41c-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.02a9.5 9.5 0 0 1-4.82-1.32l-.35-.2-3.58.93.96-3.49-.23-.36a9.42 9.42 0 0 1-1.45-5.03 9.5 9.5 0 1 1 9.49 9.47zM20.52 3.48A11.85 11.85 0 0 0 2.06 17.77L.5 23.5l5.87-1.54a11.83 11.83 0 0 0 5.66 1.44h.01a11.86 11.86 0 0 0 8.48-20.2z"/></svg>
+          <span class="hidden sm:inline">Ask us</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================= HERO / SEARCH ============================= -->
+<section class="relative brand-wash pt-28 pb-12 sm:pt-36 sm:pb-16 overflow-hidden">
+  <div class="pointer-events-none absolute -top-32 -left-24 h-[26rem] w-[26rem] rounded-full bg-leaf/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute top-10 -right-24 h-[22rem] w-[22rem] rounded-full bg-cyan/10 blur-3xl"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <a href="index.html" class="inline-flex items-center gap-2 text-sm font-medium text-cream/55 hover:text-lime transition">
+      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5m6 6-6-6 6-6"/></svg>
+      Back to the shop
+    </a>
+
+    <h1 class="mt-5 max-w-4xl font-display text-4xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight text-white">
+      Care guides for
+      <span class="bg-gradient-to-r from-lime via-cyan to-magenta bg-clip-text text-transparent">every animal</span>
+      we keep.
+    </h1>
+    <p class="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-cream/70">
+      Eighty species, from guppies to baboon spiders. Search by common name or scientific name and you get
+      the numbers that matter: enclosure size, heat gradient, humidity or water chemistry, UVB, substrate,
+      diet, lifespan, what to watch for health-wise, and the mistakes that catch people out.
+      Read it before you buy, not after.
+    </p>
+
+    <!-- search -->
+    <div class="mt-9 max-w-2xl">
+      <label for="q" class="sr-only">Search for a species</label>
+      <div class="relative">
+        <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-cream/40" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" autocomplete="off" placeholder="Search: bearded dragon, Betta splendens, tarantula&hellip;"
+               class="w-full rounded-full border border-white/12 bg-white/[.06] py-4 pl-14 pr-14 text-[15px] text-white placeholder:text-cream/35 outline-none focus:border-lime/50 focus:bg-white/[.09] transition" />
+        <button id="clear-q" type="button" aria-label="Clear search"
+                class="absolute right-4 top-1/2 hidden h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-cream/70 hover:bg-white/20">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- group filters -->
+    <div id="filters" class="mt-5 flex flex-wrap gap-2"></div>
+    <p id="count" class="mt-4 text-sm text-cream/45"></p>
+  </div>
+</section>
+
+<!-- ============================= RESULTS ============================= -->
+<section id="results" class="py-12 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div id="grid" class="grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+    <div id="empty" class="hidden rounded-3xl glass ring-brand p-10 text-center">
+      <p class="font-display text-xl font-bold text-white">Nothing matched that search</p>
+      <p class="mx-auto mt-2 max-w-md text-sm text-cream/60">
+        We keep more than this list. If you are after something you cannot see here, message us and we will tell you
+        whether we can get it and what it needs.
+      </p>
+      <a id="empty-whatsapp" href="#" class="mt-6 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 font-semibold text-ink hover:bg-lime/90 transition">Ask us about a species</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= REFERENCE GUIDES ============================= -->
+<section id="guides" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-xs font-semibold uppercase tracking-[.25em] text-lime">The basics, properly</p>
+      <h2 class="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        Seven things that decide whether it works
+      </h2>
+      <p class="mt-4 text-cream/65 text-base sm:text-lg leading-relaxed">
+        Most problems we see in the shop are one of these seven, whatever the animal. Get them right and the
+        species-specific detail becomes much easier.
+      </p>
+    </div>
+    <div id="guides-list" class="mt-10 grid gap-4 lg:grid-cols-2"></div>
+  </div>
+</section>
+
+<!-- ============================= BEFORE YOU BUY ============================= -->
+<section class="py-16 sm:py-24 bg-surface/50 border-y border-white/[.06]">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-5">
+        <p class="text-xs font-semibold uppercase tracking-[.25em] text-magenta">Before you buy</p>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          Five questions worth answering first
+        </h2>
+        <p class="mt-4 text-cream/65 leading-relaxed">
+          Most animals that end up rehomed were bought on a Saturday afternoon without these being settled.
+          Work through them and the rest gets easier.
+        </p>
+        <a id="before-whatsapp" href="#" class="mt-7 inline-flex items-center gap-2.5 rounded-full bg-magenta px-6 py-3.5 font-semibold text-white hover:bg-magenta/90 transition">
+          Talk it through with us
+        </a>
+      </div>
+      <div class="lg:col-span-7">
+        <ol id="questions" class="space-y-4"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= PERMITS ============================= -->
+<section class="py-16 sm:py-20">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="rounded-3xl border border-amber/25 bg-amber/[.07] p-7 sm:p-9">
+      <div class="flex gap-4">
+        <span class="shrink-0 grid h-11 w-11 place-items-center rounded-xl bg-amber/15 text-amber">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 9v5M12 17.5v.01"/><path d="M10.3 4.3 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/></svg>
+        </span>
+        <div>
+          <h2 class="font-display text-xl font-bold text-white">Permits, in plain terms</h2>
+          <p class="mt-3 text-[15px] leading-relaxed text-cream/70">
+            South Africa protects its indigenous wildlife. Keeping, moving or selling an indigenous reptile,
+            tortoise, chameleon or baboon spider needs a provincial nature conservation permit, and the rules
+            differ between provinces. Several imported species carry CITES paperwork as well.
+          </p>
+          <p class="mt-3 text-[15px] leading-relaxed text-cream/70">
+            Cards below carry a note where this applies. Ask us before you commit to an animal, and ask any
+            seller to show you their paperwork. A seller who cannot is a seller to walk away from.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SOURCES ============================= -->
+<section class="py-16 sm:py-20 bg-surface/50 border-y border-white/[.06]">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <p class="text-xs font-semibold uppercase tracking-[.25em] text-cream/45">Where these numbers come from</p>
+    <h2 class="mt-3 font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+      Further reading, and the sources we check against
+    </h2>
+    <p class="mt-4 max-w-3xl text-[15px] leading-relaxed text-cream/65">
+      Husbandry standards move. Temperatures and UVB figures that were normal ten years ago have been revised,
+      and the reptile numbers on this page follow the current research-based guidance rather than the older
+      pet-trade ones. These are the references worth reading in full when you are setting up.
+    </p>
+    <div id="sources-list" class="mt-8 grid gap-4 sm:grid-cols-2"></div>
+    <p class="mt-8 text-sm leading-relaxed text-cream/45">
+      Every animal is an individual, and a care sheet is a starting point rather than a diagnosis. If something
+      looks wrong, speak to an exotics vet. We are happy to say when a problem is beyond what a shop can advise on.
+    </p>
+  </div>
+</section>
+
+<!-- ============================= CTA ============================= -->
+<section class="relative overflow-hidden">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20 sm:pb-28">
+    <div class="relative rounded-4xl brand-wash ring-brand shadow-lift px-6 py-14 sm:px-14 sm:py-20 text-center overflow-hidden">
+      <div class="pointer-events-none absolute -top-20 left-1/4 h-72 w-72 rounded-full bg-lime/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-magenta/15 blur-3xl"></div>
+      <div class="relative">
+        <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">Still not sure which one suits you?</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-cream/70 text-base sm:text-lg">
+          Send us your room, your budget and how much time you have in a week. We will come back with two or three
+          that fit, and be honest about the ones that do not.
+        </p>
+        <div class="mt-9 flex flex-wrap justify-center gap-3">
+          <a id="cta-whatsapp" href="#" class="inline-flex items-center gap-2.5 rounded-full bg-lime px-7 py-4 font-semibold text-ink hover:bg-lime/90 transition shadow-glow">Ask on WhatsApp</a>
+          <a href="index.html#visit" class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-semibold text-white hover:bg-white/10 transition">Come and see us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-white/[.07] bg-ink">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+      <a href="index.html"><img src="assets/images/logo.png" alt="Zu-nique Pet Shop" class="h-16 w-auto" /></a>
+      <p class="max-w-md text-center sm:text-right text-sm leading-relaxed text-cream/50">
+        These guides are general working ranges for healthy captive animals. The animal in front of you may need
+        something different, so ask us about the individual you are taking home.
+      </p>
+    </div>
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[.07] pt-7">
+      <p class="text-xs text-cream/40">&copy; <span id="year">2026</span> Zu-nique Pet Shop, Klerksdorp.</p>
+      <a href="index.html" class="text-xs text-cream/40 hover:text-lime">Back to the shop</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/species.js"></script>
+<script src="assets/editor.js" defer></script>
+<script>
+/* ------------------------------------------------------------------
+   Care guide: filtering, search and rendering.
+   Species records live in assets/species.js.
+------------------------------------------------------------------ */
+const WA = { number: "27798200108", msg: "Hi Zu-nique Pet Shop! I have a question about " };
+
+const GROUPS = [
+  { id: "all",        label: "Everything",  icon: "paw",     accent: "lime" },
+  { id: "aquatics",   label: "Fish & aquatics", icon: "fish",   accent: "cyan" },
+  { id: "reptiles",   label: "Reptiles & tortoises", icon: "lizard", accent: "amber" },
+  { id: "amphibians", label: "Amphibians",  icon: "frog",    accent: "leaf" },
+  { id: "birds",      label: "Birds",       icon: "feather", accent: "lime" },
+  { id: "mammals",    label: "Small mammals", icon: "paw",   accent: "purple" },
+  { id: "inverts",    label: "Tarantulas & inverts", icon: "spider", accent: "magenta" }
+];
+
+const ICONS = {
+  paw:    '<circle cx="7" cy="8" r="1.9"/><circle cx="12" cy="6" r="1.9"/><circle cx="17" cy="8" r="1.9"/><path d="M12 11c3 0 5 2.2 5 4.6 0 2-1.6 3.4-3.4 3.4-.8 0-1.1-.3-1.6-.3s-.8.3-1.6.3C8.6 19 7 17.6 7 15.6 7 13.2 9 11 12 11z"/>',
+  feather:'<path d="M16 4a4 4 0 0 1 4 4c0 4-3 6-6 7l-1 5H9l1-5c-3-1-5-3-5-6a5 5 0 0 1 5-5h6z"/>',
+  lizard: '<path d="M4 15c0-3 2.5-5 5.5-5H13l3-3 4 3-3 3v3c0 2-1.6 3.5-3.5 3.5H9A5 5 0 0 1 4 15z"/><circle cx="16.5" cy="9.5" r=".8" fill="currentColor" stroke="none"/>',
+  fish:   '<path d="M3 12c3-4 7-6 11-6 3 0 5 1.5 6 3l-2 3 2 3c-1 1.5-3 3-6 3-4 0-8-2-11-6z"/><circle cx="8.5" cy="11" r=".9" fill="currentColor" stroke="none"/>',
+  frog:   '<path d="M5 10a3.5 3.5 0 0 1 7 0 3.5 3.5 0 0 1 7 0c0 5-3.1 8-7 8s-7-3-7-8z"/><circle cx="8.6" cy="8.4" r=".9" fill="currentColor" stroke="none"/><circle cx="15.4" cy="8.4" r=".9" fill="currentColor" stroke="none"/><path d="M4 19c1.4-1.6 2.8-2.4 4.2-2.4M20 19c-1.4-1.6-2.8-2.4-4.2-2.4"/>',
+  drop:   '<path d="M12 21c-3.3 0-6-2.6-6-5.8C6 11 12 3 12 3s6 8 6 12.2C18 18.4 15.3 21 12 21z"/>',
+  bulb:   '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 3.6 10.8c-.6.5-1 1.2-1.1 2H9.5c-.1-.8-.5-1.5-1.1-2A6 6 0 0 1 12 3z"/>',
+  cricket:'<path d="M5 16c0-3.3 3.1-6 7-6s7 2.7 7 6"/><path d="M7 10 4 6M17 10l3-4M12 10V5"/><path d="M5 16h14"/>',
+  shield: '<path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="m9 12 2 2 4-4"/>',
+  filter: '<path d="M4 5h16l-6 7v6l-4 2v-8L4 5z"/>',
+  leafy:  '<path d="M5 19c0-7 5-12 14-12 0 8-5 12-11 12H5z"/><path d="M9 19c1-4 3.5-6.5 7-8"/>',
+  spider: '<circle cx="12" cy="13" r="3.2"/><path d="M12 9.8V7M9 11 5.5 8M15 11l3.5-3M8.9 14.5 5 15.5M15.1 14.5 19 15.5M10 16.2 7.6 19.5M14 16.2l2.4 3.3"/>'
+};
+
+const ACCENTS = {
+  lime:    { text: "text-lime",    bg: "bg-lime/12",    hex: "#8CC63F", hex2: "#29ABE2", ring: "ring-lime/40" },
+  cyan:    { text: "text-cyan",    bg: "bg-cyan/12",    hex: "#29ABE2", hex2: "#8CC63F", ring: "ring-cyan/40" },
+  amber:   { text: "text-amber",   bg: "bg-amber/12",   hex: "#F7941E", hex2: "#8CC63F", ring: "ring-amber/40" },
+  magenta: { text: "text-magenta", bg: "bg-magenta/12", hex: "#EC008C", hex2: "#92278F", ring: "ring-magenta/40" },
+  leaf:    { text: "text-leaf",    bg: "bg-leaf/12",    hex: "#4CAF50", hex2: "#29ABE2", ring: "ring-leaf/40" },
+  purple:  { text: "text-purple",  bg: "bg-purple/20",  hex: "#92278F", hex2: "#29ABE2", ring: "ring-purple/40" }
+};
+
+const LEVELS = {
+  "Beginner":     { cls: "bg-lime/15 text-lime" },
+  "Intermediate": { cls: "bg-cyan/15 text-cyan" },
+  "Advanced":     { cls: "bg-amber/15 text-amber" },
+  "Specialist":   { cls: "bg-magenta/15 text-magenta" }
+};
+
+const QUESTIONS = [
+  { q: "How big does it get, and how big is that in your room?",
+    a: "Adult size decides the enclosure, and the enclosure has to fit somewhere real. Measure the space before you fall for the animal." },
+  { q: "How long does it live?",
+    a: "A leopard gecko is twenty years. An African grey can outlive you. Work out who takes over if your circumstances change." },
+  { q: "What does it eat, and can you get that in Klerksdorp every week?",
+    a: "Live insects, greens and frozen rodents all need a steady supply. If the feeding routine does not fit your week, the animal suffers first." },
+  { q: "What does the setup cost, on top of the animal?",
+    a: "Heating, lighting, thermostats and the enclosure itself usually cost more than the animal. Budget for the whole thing at once." },
+  { q: "Does it need a permit?",
+    a: "Indigenous reptiles, tortoises, chameleons and baboon spiders do. So do CITES-listed birds and spiders. Sort the paperwork before the animal arrives." }
+];
+
+
+const GUIDES = [
+  {
+    icon: "drop", accent: "cyan", title: "Cycle the tank before the fish go in",
+    lead: "A new aquarium has no bacteria to process waste, so the fish poison themselves in their own ammonia. Cycling grows that bacteria first.",
+    points: [
+      "Set the tank up, add a bottled ammonia source or a pinch of food, and run the filter with no fish in it.",
+      "Test until ammonia and nitrite both read zero within 24 hours of dosing, and nitrate is climbing. That usually takes four to six weeks.",
+      "A bottled bacteria starter and a squeeze of media from an established filter both speed it up. Neither replaces testing.",
+      "Never wash filter media under the tap. Chlorine kills the bacteria you spent a month growing.",
+      "New tank syndrome, where fish die one by one in the first month, is almost always an uncycled tank."
+    ]
+  },
+  {
+    icon: "bulb", accent: "amber", title: "Heat gradients and UVB, without the guesswork",
+    lead: "A reptile does not want one temperature. It wants a range it can move through, measured at the surface it sits on rather than in the air.",
+    points: [
+      "Measure the basking spot with an infrared temperature gun pointed at the surface. Stick-on dial thermometers are close to useless.",
+      "Every heat source runs through a thermostat. Without one a bulb will cook an animal on a hot afternoon.",
+      "UVB drops off sharply with distance, and mesh cuts it further. Mounting height is part of the specification, not a detail.",
+      "A UVB tube stops producing useful output long before it stops glowing. Replace it every twelve months and write the date on it.",
+      "Coloured night bulbs disturb sleep. If a night drop is too cold, use a thermostat-controlled ceramic heater instead."
+    ]
+  },
+  {
+    icon: "cricket", accent: "lime", title: "Feeder insects are only as good as what they ate",
+    lead: "An insect straight from the tub is mostly water and shell. Gut loading and dusting are what turn it into a meal.",
+    points: [
+      "Feed your crickets and roaches properly for 24 to 48 hours before they go to the animal. Leafy greens, carrot and squash all work.",
+      "Dust with plain calcium at most feeds, and calcium with D3 a couple of times a week for animals under UVB.",
+      "A multivitamin once a week covers the gaps. More is not better, especially with vitamin A.",
+      "Waxworms and mealworms are treats. Building a diet on them causes obesity and fatty liver.",
+      "Breeding your own roaches costs less and lets you control what they have eaten."
+    ]
+  },
+  {
+    icon: "shield", accent: "magenta", title: "Moulting: leave it alone",
+    lead: "Tarantulas, scorpions, millipedes and hermit crabs all shed their exoskeleton, and it is the most dangerous few days of their year.",
+    points: [
+      "A tarantula lying on its back is moulting, not dying. Do not touch it and do not put food in the enclosure.",
+      "Wait before feeding again: one to two days for a spiderling, three to seven for a juvenile, five to ten for an adult while the fangs harden.",
+      "Remove any live insect the moment you see moulting signs. A cricket can kill a soft tarantula.",
+      "A hermit crab that buries itself for weeks is moulting. Digging it up usually kills it.",
+      "Failed moults are almost always a substrate that went too dry, or an animal disturbed part way through."
+    ]
+  },
+  {
+    icon: "filter", accent: "leaf", title: "Humidity, ventilation, and why the hygrometer lies",
+    lead: "Cheap hygrometers are inaccurate, and chasing a percentage on one causes more deaths than it prevents. Experienced keepers manage moisture instead.",
+    points: [
+      "Pour water onto one corner of the substrate rather than misting the whole enclosure. It keeps the lower layer damp and the surface dry.",
+      "A full water dish does most of the work for most species, including ones sold as high-humidity animals.",
+      "Ventilation matters more than the number. Damp plus stagnant air is what kills, not moisture itself.",
+      "Judge by the animal: good sheds, a plump abdomen, normal behaviour. Those beat any reading.",
+      "Tropical species from Asia and South America are the exception and should not be kept bone dry."
+    ]
+  },
+  {
+    icon: "leafy", accent: "purple", title: "Bioactive setups, and when they are worth it",
+    lead: "A bioactive enclosure is a live substrate with a clean-up crew of springtails and isopods that break down waste for you.",
+    points: [
+      "It suits humid setups best: crested geckos, tree frogs, millipedes, tropical snakes.",
+      "It needs depth. A drainage layer, a barrier, then 10 cm or more of soil mix with leaf litter on top.",
+      "Give the clean-up crew four to six weeks to establish before the animal moves in.",
+      "It is not zero maintenance. You still spot-clean, top up leaf litter and watch the moisture.",
+      "Arid species can go bioactive too, but with a desert clean-up crew and far less water."
+    ]
+  },
+  {
+    icon: "paw", accent: "lime", title: "Klerksdorp heat, Klerksdorp winters",
+    lead: "Most care sheets are written for northern hemisphere homes. Two local problems come up again and again.",
+    points: [
+      "Summer heat kills chinchillas, axolotls, ferrets and salamanders. All four need a genuinely cool room, and for axolotls that often means a chiller.",
+      "Winter nights get cold enough indoors that tropical reptiles need thermostat-controlled night heat, not just a day lamp.",
+      "Load shedding is a husbandry problem. Know how long your enclosures hold temperature, and keep a plan for the animals that cannot wait.",
+      "Reptiles slowing down in winter is usually normal brumation. Weigh the animal first so you can tell the difference from illness.",
+      "New animals should be settled and left alone for a week, and kept apart from established ones for longer than that."
+    ]
+  }
+];
+
+const SOURCES = [
+  { name: "ReptiFiles", url: "https://reptifiles.com/",
+    covers: "Reptiles, snakes, amphibians and some land invertebrates",
+    why: "Research-based care sheets with precise heat gradients, UVB indexes and substrate guidance. The reptile figures on this page follow theirs." },
+  { name: "The Bio Dude", url: "https://www.thebiodude.com/",
+    covers: "Tarantulas, reptiles and amphibians",
+    why: "Invertebrate husbandry, moulting intervals, feeder nutrition and naturalistic or bioactive enclosure builds." },
+  { name: "Arachnoboards", url: "https://arachnoboards.com/",
+    covers: "Tarantulas, true spiders, scorpions and land invertebrates",
+    why: "Keeper-to-keeper troubleshooting. The best place to understand why humidity percentages mislead and ventilation matters." },
+  { name: "The Spruce Pets", url: "https://www.thesprucepets.com/",
+    covers: "Small mammals, birds, fish, reptiles and invertebrates",
+    why: "Broad practical library covering housing, diet and temperament for almost every species a pet shop stocks." },
+  { name: "The Unusual Pet Vets", url: "https://www.unusualpetvets.com.au/pet-care-hub/",
+    covers: "Reptiles, amphibians, small mammals, birds and fish",
+    why: "Care sheets written by exotics vets, with clinical husbandry and preventive health rather than hobby folklore." },
+  { name: "FishLore", url: "https://www.fishlore.com/",
+    covers: "Freshwater and marine fish, and aquatic invertebrates",
+    why: "Species profiles, tank cycling and water chemistry, which is where most new fishkeeping goes wrong." }
+];
+
+const svg = (name, cls) =>
+  `<svg viewBox="0 0 24 24" class="${cls}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ICONS.paw}</svg>`;
+
+const groupOf = id => GROUPS.find(g => g.id === id) || GROUPS[0];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+let activeGroup = "all";
+let query = "";
+
+/* ---------------- rendering ---------------- */
+function card(s) {
+  const g = groupOf(s.group);
+  const a = ACCENTS[g.accent];
+  const lvl = LEVELS[s.level] || LEVELS.Beginner;
+
+  const stat = (label, value) =>
+    `<div><dt class="text-[10px] uppercase tracking-widest text-cream/40 font-semibold">${label}</dt>
+      <dd class="mt-0.5 text-[13px] font-medium text-cream/85">${esc(value)}</dd></div>`;
+
+  const row = (label, value) =>
+    `<div class="spec-row py-2.5 border-b border-white/[.06]">
+       <span class="text-[11px] uppercase tracking-widest text-cream/40 font-semibold pt-0.5">${label}</span>
+       <span class="text-[14px] leading-relaxed text-cream/80">${esc(value)}</span></div>`;
+
+  return `
+  <article id="${s.id}" class="species group flex flex-col rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] overflow-hidden transition-all duration-300 hover:bg-white/[.06] shadow-lift">
+    <div class="tile aspect-[16/10]">
+      <span class="tile-glow" style="background:${a.hex};left:-14%;top:-24%"></span>
+      <span class="tile-glow" style="background:${a.hex2};right:-18%;bottom:-28%;width:60%"></span>
+      ${s.img ? `<img src="${esc(s.img)}" alt="${esc(s.name)}" class="loaded" onerror="this.remove()" />` : ''}
+      <div class="tile-icon">${svg(g.icon, 'h-20 w-20 ' + a.text + ' opacity-90')}</div>
+      <div class="absolute inset-0 z-[3] bg-gradient-to-t from-ink/85 via-ink/5 to-transparent"></div>
+      <span class="absolute z-[4] left-4 top-4 rounded-full ${lvl.cls} px-3 py-1 text-[11px] font-bold ring-1 ring-white/10">${s.level}</span>
+      ${s.permit ? `<span class="absolute z-[4] right-4 top-4 rounded-full bg-amber/20 text-amber px-3 py-1 text-[11px] font-bold ring-1 ring-amber/30">Permit</span>` : ''}
+    </div>
+
+    <div class="flex flex-1 flex-col p-5 sm:p-6">
+      <h3 class="font-display text-xl font-bold text-white">${esc(s.name)}</h3>
+      <p class="mt-0.5 text-[13px] italic ${a.text}">${esc(s.sci)}</p>
+
+      <dl class="mt-4 grid grid-cols-2 gap-x-4 gap-y-3">
+        ${stat('Adult size', s.size)}
+        ${stat('Lifespan', s.life)}
+        ${stat('Minimum home', s.home)}
+        ${stat('Temperature', s.temp)}
+      </dl>
+
+      <details class="mt-5 group/d">
+        <summary class="flex cursor-pointer items-center justify-between gap-3 rounded-full bg-white/[.06] px-4 py-2.5 text-[13px] font-semibold text-white hover:bg-white/[.1] transition">
+          <span>Full care guide</span>
+          <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0 transition-transform duration-300 group-open/d:rotate-180" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+
+        <div class="pt-4">
+          ${row('Housing', s.home)}
+          ${row('Temperature', s.temp)}
+          ${row(s.group === 'aquatics' ? 'Water' : 'Humidity', s.env)}
+          ${row(s.group === 'aquatics' ? 'Lighting' : 'UVB & lighting', s.light)}
+          ${row(s.group === 'aquatics' ? 'Substrate & decor' : 'Substrate', s.substrate)}
+          ${row('Diet', s.diet)}
+          ${row('Lifespan', s.life)}
+
+          <div class="mt-4 rounded-2xl border border-cyan/20 bg-cyan/[.06] px-4 py-3">
+            <p class="text-[11px] uppercase tracking-widest text-cyan font-semibold">Health watch</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-cream/80">${esc(s.health)}</p>
+          </div>
+
+          <p class="mt-4 text-[11px] uppercase tracking-widest text-cream/40 font-semibold">What people get wrong</p>
+          <ul class="mt-2 space-y-2">
+            ${s.notes.map(n => `<li class="flex gap-2.5 text-[14px] leading-relaxed text-cream/75">
+              <svg viewBox="0 0 24 24" class="mt-1 h-3.5 w-3.5 shrink-0 ${a.text}" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m5 12 4.5 4.5L19 7"/></svg>
+              <span>${esc(n)}</span></li>`).join('')}
+          </ul>
+
+          ${s.permit ? `<div class="mt-4 rounded-2xl border border-amber/25 bg-amber/[.08] px-4 py-3">
+            <p class="text-[11px] uppercase tracking-widest text-amber font-semibold">Paperwork</p>
+            <p class="mt-1 text-[13px] leading-relaxed text-cream/75">${esc(s.permit)}</p></div>` : ''}
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="https://wa.me/${WA.number}?text=${encodeURIComponent(WA.msg + s.name + ' (' + s.sci + ')')}"
+               class="inline-flex items-center gap-2 rounded-full bg-lime px-4 py-2.5 text-[13px] font-semibold text-ink hover:bg-lime/90 transition">
+               Ask about ${esc(s.name.toLowerCase())}</a>
+            <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(s.wiki.replace(/ /g, '_'))}" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.04] px-4 py-2.5 text-[13px] font-semibold text-cream/75 hover:bg-white/10 transition">
+               Species background
+               <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7m0 0h-7m7 0v7"/></svg></a>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>`;
+}
+
+function renderFilters() {
+  document.getElementById('filters').innerHTML = GROUPS.map(g => {
+    const a = ACCENTS[g.accent];
+    const on = g.id === activeGroup;
+    return `<button type="button" data-group="${g.id}"
+      class="chip inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[13px] font-semibold
+             ${on ? 'border-transparent ' + a.bg + ' ' + a.text : 'border-white/12 bg-white/[.04] text-cream/65 hover:bg-white/[.08]'}">
+      ${svg(g.icon, 'h-4 w-4')} ${g.label}
+    </button>`;
+  }).join('');
+
+  document.querySelectorAll('#filters button').forEach(b => {
+    b.addEventListener('click', () => { activeGroup = b.dataset.group; renderFilters(); renderGrid(); });
+  });
+}
+
+function matches(s) {
+  if (activeGroup !== 'all' && s.group !== activeGroup) return false;
+  if (!query) return true;
+  const hay = [s.name, s.sci, s.level, groupOf(s.group).label, s.diet, s.substrate, s.health, s.notes.join(' ')].join(' ').toLowerCase();
+  return query.split(/\s+/).every(t => hay.includes(t));
+}
+
+function renderGrid() {
+  const list = window.SPECIES.filter(matches);
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  grid.innerHTML = list.map(card).join('');
+  empty.classList.toggle('hidden', list.length > 0);
+
+  const total = window.SPECIES.length;
+  document.getElementById('count').textContent =
+    list.length === total ? `${total} species in the guide`
+                          : `${list.length} of ${total} species`;
+}
+
+function renderQuestions() {
+  document.getElementById('questions').innerHTML = QUESTIONS.map((q, i) => `
+    <li class="flex gap-4 rounded-2xl glass ring-brand p-5">
+      <span class="shrink-0 grid h-9 w-9 place-items-center rounded-full bg-magenta/15 font-display text-sm font-bold text-magenta">${i + 1}</span>
+      <div>
+        <p class="font-display text-[17px] font-semibold text-white">${q.q}</p>
+        <p class="mt-1.5 text-[14px] leading-relaxed text-cream/65">${q.a}</p>
+      </div>
+    </li>`).join('');
+}
+
+
+function renderGuides() {
+  document.getElementById('guides-list').innerHTML = GUIDES.map(g => {
+    const a = ACCENTS[g.accent] || ACCENTS.lime;
+    return `
+    <details class="group/g rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] overflow-hidden transition hover:bg-white/[.055]">
+      <summary class="flex cursor-pointer items-start gap-4 p-6">
+        <span class="shrink-0 grid h-11 w-11 place-items-center rounded-xl ${a.bg} ${a.text}">${svg(g.icon, 'h-5 w-5')}</span>
+        <span class="flex-1">
+          <span class="block font-display text-lg font-bold text-white">${g.title}</span>
+          <span class="mt-1.5 block text-[14px] leading-relaxed text-cream/60">${g.lead}</span>
+        </span>
+        <svg viewBox="0 0 24 24" class="mt-2 h-4 w-4 shrink-0 text-cream/40 transition-transform duration-300 group-open/g:rotate-180" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+      </summary>
+      <ul class="space-y-2.5 px-6 pb-6 pl-[4.6rem]">
+        ${g.points.map(pt => `<li class="flex gap-2.5 text-[14px] leading-relaxed text-cream/75">
+          <svg viewBox="0 0 24 24" class="mt-1 h-3.5 w-3.5 shrink-0 ${a.text}" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m5 12 4.5 4.5L19 7"/></svg>
+          <span>${pt}</span></li>`).join('')}
+      </ul>
+    </details>`;
+  }).join('');
+}
+
+function renderSources() {
+  document.getElementById('sources-list').innerHTML = SOURCES.map(src => `
+    <a href="${src.url}" target="_blank" rel="noopener"
+       class="group flex flex-col rounded-2xl bg-white/[.035] ring-1 ring-white/[.07] p-5 hover:bg-white/[.07] transition">
+      <span class="flex items-center justify-between gap-3">
+        <span class="font-display text-[17px] font-bold text-white group-hover:text-lime transition">${src.name}</span>
+        <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0 text-cream/35 group-hover:text-lime transition" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7m0 0h-7m7 0v7"/></svg>
+      </span>
+      <span class="mt-1 block text-[11px] uppercase tracking-widest text-cream/40 font-semibold">${src.covers}</span>
+      <span class="mt-2.5 block text-[13px] leading-relaxed text-cream/60">${src.why}</span>
+    </a>`).join('');
+}
+
+/* ---------------- wiring ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const wa = `https://wa.me/${WA.number}?text=${encodeURIComponent(WA.msg)}`;
+  ['nav-whatsapp', 'cta-whatsapp', 'before-whatsapp', 'empty-whatsapp']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.href = wa; });
+
+  renderFilters();
+  renderQuestions();
+  renderGuides();
+  renderSources();
+  renderGrid();
+
+  // Species edited through /admin/ land in content/species.json and replace the
+  // defaults above. If the file is missing the guide simply keeps its defaults.
+  fetch('content/species.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { if (d && Array.isArray(d.species) && d.species.length) { window.SPECIES = d.species; renderGrid(); } })
+    .catch(() => {});
+
+  const input = document.getElementById('q');
+  const clear = document.getElementById('clear-q');
+  input.addEventListener('input', () => {
+    query = input.value.trim().toLowerCase();
+    clear.style.display = query ? 'grid' : 'none';
+    renderGrid();
+  });
+  clear.addEventListener('click', () => { input.value = ''; query = ''; clear.style.display = 'none'; renderGrid(); input.focus(); });
+
+  // care.html#leopard-gecko opens that species directly
+  if (location.hash.length > 1) {
+    const el = document.getElementById(location.hash.slice(1));
+    if (el) {
+      const d = el.querySelector('details'); if (d) d.open = true;
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+    }
+  }
+});
+</script>
+
+</body>
+</html>

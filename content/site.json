@@ -1,0 +1,248 @@
+{
+  "brand": {
+    "name": "Zu-nique",
+    "sub": "Pet Shop"
+  },
+  "contact": {
+    "whatsapp": "27798200108",
+    "whatsappMessage": "Hi Zu-nique Pet Shop! I'd like to ask about ",
+    "phone1": "079 820 0108",
+    "name1": "Juanita",
+    "tel1": "+27798200108",
+    "phone2": "076 379 4051",
+    "name2": "Gert",
+    "tel2": "+27763794051",
+    "primaryLabel": "Call 079 820 0108",
+    "address": "Inside Eden Garden Centre, 2 Vlei Street, Wilkoppies, Klerksdorp, 2571, North West",
+    "mapsQuery": "Eden Garden Centre, 2 Vlei Street, Wilkoppies, Klerksdorp, 2571",
+    "facebook": "https://www.facebook.com/share/1ba2mhwR1t/"
+  },
+  "hours": {
+    "weekdays": "08:00 – 17:00",
+    "saturday": "08:00 – 15:00",
+    "sunday": "09:00 – 13:00",
+    "schedule": [
+      {
+        "day": "Sunday",
+        "open": "09:00",
+        "close": "13:00"
+      },
+      {
+        "day": "Monday",
+        "open": "08:00",
+        "close": "17:00"
+      },
+      {
+        "day": "Tuesday",
+        "open": "08:00",
+        "close": "17:00"
+      },
+      {
+        "day": "Wednesday",
+        "open": "08:00",
+        "close": "17:00"
+      },
+      {
+        "day": "Thursday",
+        "open": "08:00",
+        "close": "17:00"
+      },
+      {
+        "day": "Friday",
+        "open": "08:00",
+        "close": "17:00"
+      },
+      {
+        "day": "Saturday",
+        "open": "08:00",
+        "close": "15:00"
+      }
+    ],
+    "note": "Public holidays follow Sunday hours (09:00 – 13:00)."
+  },
+  "trust": [
+    {
+      "icon": "shield",
+      "title": "Welfare first",
+      "text": "Responsibly sourced, then given time to settle before we offer them."
+    },
+    {
+      "icon": "hand",
+      "title": "Hand-reared birds",
+      "text": "Handled every day, so they are used to people by the time you meet them."
+    },
+    {
+      "icon": "tools",
+      "title": "Built in-house",
+      "text": "Timber vivariums, cabinets and aviaries made to your measurements."
+    },
+    {
+      "icon": "chat",
+      "title": "Advice after the sale",
+      "text": "Send us a photo on WhatsApp if something looks wrong. Early problems are the easy ones."
+    }
+  ],
+  "livestock": [
+    {
+      "title": "Exotic Mammals",
+      "tag": "Chinchillas · Sugar gliders",
+      "accent": "lime",
+      "text": "Chinchillas and sugar gliders that are used to being handled, with the diet and housing detail you will need.",
+      "img": "",
+      "alt": "Chinchillas at Zu-nique Pet Shop",
+      "icon": "paw"
+    },
+    {
+      "title": "Hand-Reared Birds",
+      "tag": "Parrots · Conures · Cockatiels · Lovebirds",
+      "accent": "cyan",
+      "text": "Raised by hand and handled every day, so they step up willingly. We will show you how before you leave.",
+      "img": "",
+      "alt": "Hand-reared birds at Zu-nique Pet Shop",
+      "icon": "feather"
+    },
+    {
+      "title": "Reptiles",
+      "tag": "Bearded dragons · Leopard geckos · Chameleons · Snakes",
+      "accent": "amber",
+      "text": "Captive-bred where we can, feeding reliably before we offer them, with the heating and lighting spec written out for you.",
+      "img": "",
+      "alt": "Reptiles at Zu-nique Pet Shop",
+      "icon": "lizard"
+    },
+    {
+      "title": "Tortoises & Chelonians",
+      "tag": "Permit-compliant species",
+      "accent": "leaf",
+      "text": "Long-lived animals that need a long-term plan. We will talk you through permits, outdoor space and winter care.",
+      "img": "",
+      "alt": "Tortoises at Zu-nique Pet Shop",
+      "icon": "shell"
+    },
+    {
+      "title": "Akwa Aquatics",
+      "tag": "Tanks · Filtration · Plants · Feeds",
+      "accent": "cyan",
+      "text": "Freshwater stock plus the Akwa range, with help on cycling, water testing and planting.",
+      "img": "",
+      "alt": "Aquariums at Zu-nique Pet Shop",
+      "icon": "fish"
+    },
+    {
+      "title": "Custom Enclosures",
+      "tag": "Built to your measurements",
+      "accent": "magenta",
+      "text": "Vivarium cabinets, aviaries and small-mammal enclosures in timber, finished well enough for a living room.",
+      "img": "",
+      "alt": "A custom-built enclosure by Zu-nique Pet Shop",
+      "icon": "box"
+    }
+  ],
+  "habitatPoints": [
+    "Vivarium cabinets with planned heating runs, thermostat housing and tidy cabling",
+    "Aviaries and flight cages sized for the species that will live in them",
+    "Small-mammal and glider enclosures with safe mesh, secure catches and easy cleaning access",
+    "Dimensions and finishes matched to your room, so it fits where you want it",
+    "Retro-fits and repairs on enclosures you already own"
+  ],
+  "supplies": [
+    {
+      "icon": "cricket",
+      "title": "Live feeders",
+      "text": "Crickets, mealworms and roaches, kept fed so they are still worth eating when they reach your animal.",
+      "accent": "lime"
+    },
+    {
+      "icon": "leafy",
+      "title": "Hay, pellets and mixes",
+      "text": "Dry food for small mammals and birds, with portioning advice for the species you keep.",
+      "accent": "leaf"
+    },
+    {
+      "icon": "drop",
+      "title": "Supplements",
+      "text": "Calcium, D3 and multivitamin dusting powders, with a dusting schedule you can keep to.",
+      "accent": "amber"
+    },
+    {
+      "icon": "bulb",
+      "title": "Heating & lighting",
+      "text": "UVB tubes, ceramic emitters, thermostats and probes. We set them up and test them with you in store.",
+      "accent": "magenta"
+    },
+    {
+      "icon": "filter",
+      "title": "Akwa filtration and water",
+      "text": "Filters, media, dechlorinators and test kits, plus advice when the water goes cloudy.",
+      "accent": "cyan"
+    },
+    {
+      "icon": "plant",
+      "title": "Substrates and décor",
+      "text": "Aquascaping plants, branches, hides and substrates picked for the species you keep.",
+      "accent": "purple"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can I visit just to look and ask questions?",
+      "a": "Please do. Plenty of people come in three or four times before they decide anything. There is no pressure to buy on the day, and we would rather you left with a plan than with an animal you were not ready for."
+    },
+    {
+      "q": "Can you hold an animal while I finish the enclosure?",
+      "a": "Ask us and we will usually arrange something. We are also happy to look the setup over before the animal moves in."
+    },
+    {
+      "q": "What does a custom enclosure cost and how long does it take?",
+      "a": "It depends on size, materials and the heating you need. Send your measurements and the species on WhatsApp and we will quote you."
+    },
+    {
+      "q": "Do you deliver?",
+      "a": "Message us about supplies and enclosures around Klerksdorp. Livestock we prefer you collect, so we can hand over in person and go through the care details with you."
+    },
+    {
+      "q": "Are your reptiles and exotics legally sourced?",
+      "a": "Yes. If a species needs a permit on your side, we will tell you before you buy rather than after."
+    },
+    {
+      "q": "My setup already has problems. Can you help?",
+      "a": "Send a photo of the enclosure and its readings on WhatsApp. Heat, humidity and lighting issues usually show up straight away, and the fix is normally cheaper than people fear."
+    }
+  ],
+  "hero": {
+    "badge": "Inside Eden Garden Centre, Klerksdorp",
+    "title1": "Ethical exotic pets,",
+    "title2": "custom habitats",
+    "title3": "& Akwa aquatics.",
+    "subtitle": "A small pet shop run by Juanita and Gert. Hand-reared birds, responsibly sourced reptiles and exotics, planted aquariums, and enclosures we build ourselves. Ask us anything before you buy."
+  },
+  "sections": {
+    "livestock": {
+      "title": "Meet the residents",
+      "intro": "We keep a small selection so every animal is properly housed and properly known before it goes home. What we have changes from week to week, so message us and we'll tell you what is here today."
+    },
+    "habitats": {
+      "title": "Enclosures built to fit your animal and your room",
+      "intro": "Off-the-shelf cages rarely suit either. Gert builds timber vivarium cabinets, aviaries and small-mammal enclosures to your measurements, with the ventilation, heating runs and access panels planned in from the start."
+    },
+    "supplies": {
+      "title": "Feeders, food and hardware",
+      "intro": "Live feeders, species-appropriate dry food, and the Akwa range for tanks, filtration and water chemistry. If we don't stock something, we'll point you to someone who does."
+    },
+    "care": {
+      "title": "We would rather talk you out of it than sell you the wrong pet",
+      "intro": "Most exotics that struggle are in the wrong setup rather than the wrong hands. Tell us about your room, your budget and your week, and we'll match an animal to it honestly, including when the answer is \"not yet\"."
+    },
+    "visit": {
+      "title": "Come and meet them in person",
+      "intro": "We're inside Eden Garden Centre. There's parking, and the coffee shop is right there if you want to think it over."
+    },
+    "cta": {
+      "title": "Not sure where to start?",
+      "subtitle": "Tell us about your space and how much time you have. We'll come back with two or three options, and what each one actually costs to keep."
+    },
+    "footer": {
+      "blurb": "Ethical exotic pets, custom-built habitats and Akwa aquatics, run by Juanita and Gert in Klerksdorp."
+    }
+  }
+}
