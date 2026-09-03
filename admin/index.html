@@ -7,9 +7,20 @@
   <title>Zu-nique Pet Shop — Content Manager</title>
   <link rel="icon" href="/assets/images/logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    .zu-editor-launcher {
+      position: fixed; bottom: 20px; right: 20px; z-index: 99999;
+      background: #8CC63F; color: #00272E; padding: 12px 20px; border-radius: 999px;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px;
+      text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s;
+    }
+    .zu-editor-launcher:hover { transform: scale(1.05); }
+  </style>
 </head>
 <body>
   <!-- Decap CMS -->
   <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.8.3/dist/decap-cms.js"></script>
+  <a href="/?edit=1" target="_blank" class="zu-editor-launcher">🎨 Open Visual Drag &amp; Drop Editor</a>
 </body>
 </html>

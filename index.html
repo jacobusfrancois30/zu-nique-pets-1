@@ -583,7 +583,7 @@ tailwind.config = {
 
     <div class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[.07] pt-7">
       <p class="text-xs text-cream/40">&copy; <span id="year">2026</span> Zu-nique Pet Shop. All rights reserved.</p>
-      <p class="text-xs text-cream/30">Press <kbd class="rounded bg-white/10 px-1.5 py-0.5 font-sans">Ctrl</kbd>+<kbd class="rounded bg-white/10 px-1.5 py-0.5 font-sans">Shift</kbd>+<kbd class="rounded bg-white/10 px-1.5 py-0.5 font-sans">E</kbd> to edit this page &middot; <a href="/admin/" class="hover:text-lime">CMS</a></p>
+      <p class="text-xs text-cream/30"><a href="/admin/" class="hover:text-lime">Staff Admin</a></p>
     </div>
   </div>
 </footer>
@@ -969,6 +969,13 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(r => r.ok ? r.json() : null)
     .then(data => { if (data) { deepMerge(SITE, data); renderAll(); } })
     .catch(() => {});
+
+  // Load visual editor dynamically ONLY if explicit ?edit=1 URL param is present
+  if (/[?&]edit=1\b/.test(window.location.search)) {
+    var ed = document.createElement('script');
+    ed.src = 'assets/editor.js?v=20260903';
+    document.head.appendChild(ed);
+  }
 
   setInterval(renderStatus, 60000);
 });

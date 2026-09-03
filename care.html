@@ -332,7 +332,7 @@ tailwind.config = {
   </div>
 </footer>
 
-<script src="assets/species.js"></script>
+<script src="assets/species.js?v=20260903"></script>
 <script>
 /* ------------------------------------------------------------------
    Care guide: filtering, search and rendering.
@@ -699,18 +699,24 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSources();
   renderGrid();
 
-  // Fetch latest species data (in case species.js is cached or stale)
-  fetch('/content/species.json', { cache: 'no-store' })
-    .then(function(r) { return r.ok ? r.json() : Promise.reject('not ok'); })
+  // Fetch latest species data (try relative path first, fallback to root path)
+  var loadSpeciesData = function(url) {
+    return fetch(url, { cache: 'no-store' }).then(function(r) { return r.ok ? r.json() : Promise.reject(); });
+  };
+  loadSpeciesData('content/species.json')
+    .catch(function() { return loadSpeciesData('/content/species.json'); })
     .then(function(d) {
       if (d && Array.isArray(d.species) && d.species.length) {
         window.SPECIES = d.species;
         renderGrid();
+      } else if (Array.isArray(window.SPECIES) && window.SPECIES.length) {
+        renderGrid();
       }
     })
     .catch(function() {
-      // species.js already set window.SPECIES — nothing more to do
-      if (!Array.isArray(window.SPECIES) || !window.SPECIES.length) {
+      if (Array.isArray(window.SPECIES) && window.SPECIES.length) {
+        renderGrid();
+      } else {
         console.warn('care.html: species data unavailable');
       }
     });
