@@ -181,6 +181,7 @@
   /* Snapshot of the rendered page */
   function capturePage() {
     stashScripts();
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
     var clone = document.body.cloneNode(true);
     clone.querySelectorAll('script').forEach(function (s) { s.remove(); });
     clone.querySelectorAll('#gjs-launcher, #zu-floating-edit-btn, #zu-editor-bar, #zu-context-bar, #gjs, .sr-only, #zu-auth-modal').forEach(function (s) { s.remove(); });
@@ -312,7 +313,7 @@
           { id: 'mobile',  name: 'Mobile',  width: '390px',  widthMedia: '640px' }
         ]
       },
-      canvas: { styles: [FONTS] },
+      canvas: { styles: [FONTS], scripts: [TAILWIND] },
       selectorManager: { componentFirst: true },
       blockManager: { appendTo: undefined }
     });
@@ -379,10 +380,11 @@
       doc.body.style.background = '#00272E';
 
       var fix = doc.createElement('style');
-      fix.textContent = '.reveal{opacity:1!important;transform:none!important}' +
+      fix.textContent = '.reveal{opacity:1!important;transform:none!important;visibility:visible!important}' +
                         '.tile > img{opacity:1!important}' +
+                        'body{background:#00272E!important;color:#F4FAF8!important;min-height:100vh}' +
                         '#site-header{position:static!important}' +
-                        '#float-whatsapp{position:static!important;display:none}' +
+                        '#float-whatsapp{display:none!important}' +
                         '#zu-floating-edit-btn{display:none!important}' +
                         '.gjs-drop-active{outline:3px dashed #8CC63F!important;outline-offset:-3px}';
       doc.head.appendChild(fix);
