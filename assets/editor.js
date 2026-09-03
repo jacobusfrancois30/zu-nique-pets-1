@@ -23,7 +23,7 @@
   'use strict';
 
   var CONFIG = {
-    repo:   'francois-ta-tests/zu-nique-pets',
+    repo:   'jacobusfrancois30/zu-nique-pets-1',
     branch: 'main',
     oauth:  'https://decap-oauth.jacobusfrancois30.workers.dev'
   };
