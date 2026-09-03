@@ -25,7 +25,7 @@
   var CONFIG = {
     repo:   'francois-ta-tests/zu-nique-pets',
     branch: 'main',
-    oauth:  'https://divine-math-b409.jacobusfrancois30.workers.dev'
+    oauth:  'https://decap-oauth.jacobusfrancois30.workers.dev'
   };
 
   var GJS_VERSION = '0.21.13';

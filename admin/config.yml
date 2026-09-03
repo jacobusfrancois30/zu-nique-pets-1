@@ -15,7 +15,7 @@ backend:
   repo: francois-ta-tests/zu-nique-pets
   branch: main
   # Cloudflare Pages has no built-in OAuth broker, so Decap uses this worker.
-  base_url: https://divine-math-b409.jacobusfrancois30.workers.dev
+  base_url: https://decap-oauth.jacobusfrancois30.workers.dev
   auth_endpoint: auth
 
   # --- Alternative: Netlify Identity / Git Gateway -------------------
