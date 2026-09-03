@@ -4,33 +4,26 @@
    Loads nothing until you ask for it, so visitors never pay for it.
 
    How to open the editor:
-     - Press  Ctrl + Shift + E  (Cmd + Shift + E on a Mac), or
-     - Visit  https://your-site/?edit=1
-   It works on any page that loads this script, so index.html and
-   care.html both open in the editor.
+     - Click the floating "✏️ Edit Page" button on the bottom left, or
+     - Press Ctrl + Shift + E (Cmd + Shift + E on Mac), or
+     - Visit https://your-site/?edit=1
 
    Inside the editor:
      - Drag blocks from the right-hand Blocks panel onto the page
      - Click any element to edit it, double-click text to retype it
-     - Click an image, then use the Settings (gear) panel to swap its URL
-     - "Publish" commits the page straight to GitHub and Cloudflare Pages
-       rebuilds within about a minute
-     - "Download" saves the finished HTML instead, if you would rather
-       commit it yourself
-     - "Exit" reloads the live page and discards anything unsaved
-
-   Publishing signs you in with GitHub through the same OAuth worker the
-   CMS uses. The token lives in memory for that editing session only and
-   is never written to browser storage.
-
-   The CONFIG block below is already set for this repo and OAuth worker,
-   and matches admin/config.yml. Change it only if those change.
+     - Click an image, then swap its URL or upload
+     - "👁️ Live Preview" to preview the page without editor controls
+     - "🚀 Publish" commits the page straight to GitHub and Cloudflare Pages
+       rebuilds automatically within ~60 seconds
+     - "⚙️ CMS" opens Decap CMS at /admin/
+     - "💾 Download" saves the finished HTML file locally
+     - "✕ Exit" returns to the live page
    ===================================================================== */
 (function () {
   'use strict';
 
   var CONFIG = {
-    repo:   'jacobusfrancois30/zu-nique-pets',
+    repo:   'francois-ta-tests/zu-nique-pets',
     branch: 'main',
     oauth:  'https://divine-math-b409.jacobusfrancois30.workers.dev'
   };
@@ -42,7 +35,7 @@
   var FONTS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap';
 
   var launched = false;
-  var token = null;   // GitHub token, memory only, cleared when the tab closes
+  var token = null;
 
   /* Which file in the repo this page is. index.html for the site root. */
   function repoPath() {
@@ -52,12 +45,52 @@
   }
 
   var configured = CONFIG.repo.indexOf('YOUR-GITHUB') === -1 &&
-                   CONFIG.oauth.indexOf('YOUR-SUBDOMAIN') === -1;   // guard for an unfilled copy
+                   CONFIG.oauth.indexOf('YOUR-SUBDOMAIN') === -1;
+
+  /* ---------- Floating Launcher Pill on Live Site ---------- */
+  function addFloatingLauncher() {
+    if (document.getElementById('zu-floating-edit-btn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'zu-floating-edit-btn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Open Drag and Drop Visual Editor');
+    btn.style.cssText = 'position:fixed;bottom:24px;left:24px;z-index:9990;display:inline-flex;align-items:center;gap:8px;' +
+      'background:rgba(0,39,46,0.92);backdrop-filter:blur(12px);color:#8CC63F;border:1px solid rgba(140,198,63,0.35);' +
+      'padding:10px 18px;border-radius:999px;font:700 13px/1 Outfit,system-ui,sans-serif;' +
+      'box-shadow:0 12px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(140,198,63,0.2);cursor:pointer;transition:all .25s ease;';
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>Edit Page (Drag &amp; Drop)</span>';
+    
+    btn.addEventListener('mouseenter', function() {
+      btn.style.background = '#8CC63F';
+      btn.style.color = '#00272E';
+      btn.style.transform = 'translateY(-2px) scale(1.03)';
+      btn.style.boxShadow = '0 16px 36px -8px rgba(140,198,63,0.45)';
+    });
+    btn.addEventListener('mouseleave', function() {
+      btn.style.background = 'rgba(0,39,46,0.92)';
+      btn.style.color = '#8CC63F';
+      btn.style.transform = 'none';
+      btn.style.boxShadow = '0 12px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(140,198,63,0.2)';
+    });
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      launch();
+    });
+    document.body.appendChild(btn);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addFloatingLauncher);
+  } else {
+    addFloatingLauncher();
+  }
 
   /* ---------- trigger: keyboard shortcut or ?edit=1 ---------- */
   document.addEventListener('keydown', function (e) {
-    if (e.ctrlKey && e.shiftKey && (e.key === 'E' || e.key === 'e')) { e.preventDefault(); launch(); }
-    if (e.metaKey && e.shiftKey && (e.key === 'E' || e.key === 'e')) { e.preventDefault(); launch(); }
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
+      e.preventDefault();
+      launch();
+    }
   });
 
   if (/[?&]edit=1\b/.test(window.location.search)) {
@@ -86,18 +119,17 @@
     t.textContent = msg;
     t.style.cssText = 'position:fixed;z-index:100000;left:50%;bottom:26px;transform:translateX(-50%);' +
       'background:' + (tone === 'bad' ? '#EC008C' : '#8CC63F') + ';color:#00272E;font:600 14px/1.4 Outfit,system-ui,sans-serif;' +
-      'padding:12px 20px;border-radius:999px;box-shadow:0 18px 40px -16px rgba(0,0,0,.7)';
+      'padding:12px 22px;border-radius:999px;box-shadow:0 18px 40px -16px rgba(0,0,0,.7);transition:all .3s ease;';
     document.body.appendChild(t);
-    setTimeout(function () { t.style.transition = 'opacity .4s'; t.style.opacity = '0'; }, 2600);
-    setTimeout(function () { t.remove(); }, 3100);
+    setTimeout(function () { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(10px)'; }, 3200);
+    setTimeout(function () { t.remove(); }, 3600);
   }
 
-  /* Snapshot of the rendered page: everything inside <body> except the
-     editor's own script tags. This is what becomes editable. */
+  /* Snapshot of the rendered page */
   function capturePage() {
     var clone = document.body.cloneNode(true);
     clone.querySelectorAll('script').forEach(function (s) { s.remove(); });
-    clone.querySelectorAll('#gjs-launcher, .sr-only').forEach(function (s) { s.remove(); });
+    clone.querySelectorAll('#gjs-launcher, #zu-floating-edit-btn, #zu-editor-bar, #gjs, .sr-only').forEach(function (s) { s.remove(); });
     // Freeze lazy images so their URLs survive the round-trip
     clone.querySelectorAll('img[data-src]').forEach(function (img) {
       if (!img.getAttribute('src')) img.setAttribute('src', img.getAttribute('data-src'));
@@ -107,11 +139,11 @@
     return clone.innerHTML;
   }
 
-  /* The page's own <style> block, reused verbatim inside the editor canvas
-     so what you see in the editor matches the live site. */
   function pageCss() {
     var out = '';
-    document.querySelectorAll('style').forEach(function (s) { out += s.textContent + '\n'; });
+    document.querySelectorAll('style').forEach(function (s) {
+      if (s.id !== 'grapesjs-injected') out += s.textContent + '\n';
+    });
     return out;
   }
 
@@ -128,6 +160,9 @@
     if (launched) return;
     launched = true;
 
+    var floatingBtn = document.getElementById('zu-floating-edit-btn');
+    if (floatingBtn) floatingBtn.remove();
+
     var html = capturePage();
     var css = pageCss();
     var twConfig = tailwindConfigSource();
@@ -135,7 +170,8 @@
     document.body.style.cssText = 'margin:0;background:#00272E;overflow:hidden';
     document.body.innerHTML =
       '<div id="gjs-launcher" style="position:fixed;inset:0;display:grid;place-items:center;background:#00272E;color:#F4FAF8;' +
-      'font:600 15px/1.5 Outfit,system-ui,sans-serif;z-index:99999">Loading the visual editor&hellip;</div>';
+      'font:600 16px/1.5 Outfit,system-ui,sans-serif;z-index:99999">' +
+      '<div style="text-align:center"><div style="font-size:32px;margin-bottom:12px">🎨</div><div>Loading Visual Editor&hellip;</div></div></div>';
 
     Promise.all([loadCss(GJS_CSS), loadJs(GJS_JS)])
       .then(function () { boot(html, css, twConfig); })
@@ -144,10 +180,9 @@
           '<div style="text-align:center;max-width:34rem;padding:2rem">' +
           '<p style="font-size:20px;font-weight:800">The editor could not load</p>' +
           '<p style="margin-top:10px;font-weight:400;opacity:.7">' + err.message + '</p>' +
-          '<p style="margin-top:10px;font-weight:400;opacity:.7">This usually means the CDN is blocked on this network. ' +
-          'The live site itself is unaffected.</p>' +
+          '<p style="margin-top:10px;font-weight:400;opacity:.7">Please verify your internet connection or reload.</p>' +
           '<button onclick="location.href=location.pathname" style="margin-top:20px;background:#8CC63F;color:#00272E;border:0;' +
-          'padding:12px 22px;border-radius:999px;font:700 14px Outfit,sans-serif;cursor:pointer">Back to the site</button></div>';
+          'padding:12px 22px;border-radius:999px;font:700 14px Outfit,sans-serif;cursor:pointer">Back to Live Site</button></div>';
       });
   }
 
@@ -158,19 +193,29 @@
 
     var bar = document.createElement('div');
     bar.id = 'zu-editor-bar';
-    bar.style.cssText = 'position:fixed;top:0;left:0;right:0;height:56px;z-index:9;display:flex;align-items:center;' +
-      'justify-content:space-between;gap:12px;padding:0 16px;background:#00272E;border-bottom:1px solid rgba(255,255,255,.08);' +
-      'font-family:Outfit,system-ui,sans-serif;color:#F4FAF8';
+    bar.style.cssText = 'position:fixed;top:0;left:0;right:0;height:56px;z-index:99999;display:flex;align-items:center;' +
+      'justify-content:space-between;gap:12px;padding:0 16px;background:#00272E;border-bottom:1px solid rgba(255,255,255,.1);' +
+      'font-family:Outfit,system-ui,sans-serif;color:#F4FAF8;box-shadow:0 4px 20px rgba(0,0,0,.4)';
     bar.innerHTML =
-      '<div style="display:flex;align-items:center;gap:10px;min-width:0">' +
-        '<img src="assets/images/mark.png" alt="" style="height:32px;width:32px" onerror="this.remove()">' +
-        '<div style="min-width:0"><div style="font-weight:800;font-size:14px;line-height:1.1">Zu-nique visual editor</div>' +
-        '<div style="font-size:11px;opacity:.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Editing ' + repoPath() + ' &middot; drag blocks in, double-click text, then Publish</div></div>' +
+      '<div style="display:flex;align-items:center;gap:12px;min-width:0">' +
+        '<img src="assets/images/mark.png" alt="" style="height:30px;width:30px;border-radius:6px" onerror="this.remove()">' +
+        '<div style="min-width:0">' +
+          '<div style="font-weight:800;font-size:14px;line-height:1.2;color:#fff">Zu-nique Visual Editor</div>' +
+          '<div style="font-size:11px;opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Editing ' + repoPath() + ' &bull; Drag blocks &bull; Double-click text to edit</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:6px">' +
+        '<button id="zu-dev-desktop" title="Desktop view" style="background:#8CC63F;color:#00272E;border:0;padding:6px 12px;border-radius:6px;font:700 12px Outfit,sans-serif;cursor:pointer">🖥️ Desktop</button>' +
+        '<button id="zu-dev-tablet" title="Tablet view" style="background:rgba(255,255,255,.08);color:#ddd;border:0;padding:6px 12px;border-radius:6px;font:600 12px Outfit,sans-serif;cursor:pointer">📱 Tablet</button>' +
+        '<button id="zu-dev-mobile" title="Mobile view" style="background:rgba(255,255,255,.08);color:#ddd;border:0;padding:6px 12px;border-radius:6px;font:600 12px Outfit,sans-serif;cursor:pointer">📱 Mobile</button>' +
+        '<div style="width:1px;height:20px;background:rgba(255,255,255,.15);margin:0 4px"></div>' +
+        '<button id="zu-toggle-preview" title="Live Preview" style="background:rgba(41,171,226,.15);color:#29ABE2;border:1px solid rgba(41,171,226,.3);padding:6px 14px;border-radius:999px;font:700 12px Outfit,sans-serif;cursor:pointer">👁️ Preview</button>' +
       '</div>' +
       '<div style="display:flex;align-items:center;gap:8px">' +
-        '<button id="zu-publish" style="background:#8CC63F;color:#00272E;border:0;padding:10px 18px;border-radius:999px;font:700 13px Outfit,sans-serif;cursor:pointer">Publish</button>' +
-        '<button id="zu-export" style="background:rgba(255,255,255,.08);color:#F4FAF8;border:1px solid rgba(255,255,255,.14);padding:10px 16px;border-radius:999px;font:600 13px Outfit,sans-serif;cursor:pointer">Download</button>' +
-        '<button id="zu-exit" style="background:rgba(255,255,255,.08);color:#F4FAF8;border:1px solid rgba(255,255,255,.14);padding:10px 16px;border-radius:999px;font:600 13px Outfit,sans-serif;cursor:pointer">Exit</button>' +
+        '<a href="admin/" target="_blank" title="Decap CMS" style="background:rgba(255,255,255,.08);color:#F4FAF8;border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:999px;font:600 12px Outfit,sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:4px">⚙️ CMS</a>' +
+        '<button id="zu-publish" style="background:#8CC63F;color:#00272E;border:0;padding:9px 18px;border-radius:999px;font:700 13px Outfit,sans-serif;cursor:pointer;box-shadow:0 0 16px rgba(140,198,63,.3)">🚀 Publish to Live</button>' +
+        '<button id="zu-export" style="background:rgba(255,255,255,.08);color:#F4FAF8;border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:999px;font:600 12px Outfit,sans-serif;cursor:pointer">💾 Download</button>' +
+        '<button id="zu-exit" style="background:rgba(255,255,255,.08);color:#F4FAF8;border:1px solid rgba(255,255,255,.14);padding:8px 14px;border-radius:999px;font:600 12px Outfit,sans-serif;cursor:pointer">✕ Live Site</button>' +
       '</div>';
     document.body.appendChild(bar);
 
@@ -184,7 +229,7 @@
       height: '100%',
       width: 'auto',
       fromElement: false,
-      storageManager: false,          // Git stays the source of truth — nothing is cached in the browser
+      storageManager: false,
       avoidInlineStyle: true,
       components: html,
       style: '',
@@ -194,7 +239,7 @@
           'assets/images/mark.png'
         ],
         upload: false,
-        uploadText: 'Paste an image URL below (or add files to assets/images/ in your repo and use that path)'
+        uploadText: 'Paste an image URL below or select an asset'
       },
       deviceManager: {
         devices: [
@@ -208,8 +253,47 @@
       blockManager: { appendTo: undefined }
     });
 
-    /* Inject Tailwind + the site's own CSS into the editing canvas so the
-       preview is pixel-identical to the live page. */
+    /* Device buttons handling */
+    function setDeviceActive(activeId) {
+      ['desktop', 'tablet', 'mobile'].forEach(function(d) {
+        var btn = document.getElementById('zu-dev-' + d);
+        if (btn) {
+          if (d === activeId.toLowerCase()) {
+            btn.style.background = '#8CC63F';
+            btn.style.color = '#00272E';
+            btn.style.fontWeight = '700';
+          } else {
+            btn.style.background = 'rgba(255,255,255,.08)';
+            btn.style.color = '#ddd';
+            btn.style.fontWeight = '600';
+          }
+        }
+      });
+    }
+
+    document.getElementById('zu-dev-desktop').addEventListener('click', function () {
+      editor.setDevice('desktop');
+      setDeviceActive('desktop');
+    });
+    document.getElementById('zu-dev-tablet').addEventListener('click', function () {
+      editor.setDevice('tablet');
+      setDeviceActive('tablet');
+    });
+    document.getElementById('zu-dev-mobile').addEventListener('click', function () {
+      editor.setDevice('mobile');
+      setDeviceActive('mobile');
+    });
+
+    var isPreview = false;
+    document.getElementById('zu-toggle-preview').addEventListener('click', function () {
+      isPreview = !isPreview;
+      editor.runCommand(isPreview ? 'preview' : 'preview');
+      this.textContent = isPreview ? '✏️ Edit Mode' : '👁️ Preview';
+      this.style.background = isPreview ? '#29ABE2' : 'rgba(41,171,226,.15)';
+      this.style.color = isPreview ? '#00272E' : '#29ABE2';
+    });
+
+    /* Inject CSS & Tailwind into editor canvas */
     editor.on('load', function () {
       var doc = editor.Canvas.getDocument();
       if (!doc) return;
@@ -229,18 +313,18 @@
       doc.body.className = 'bg-ink text-cream/90 font-body antialiased';
       doc.body.style.background = '#00272E';
 
-      // Reveal animations would hide content inside the editor
       var fix = doc.createElement('style');
       fix.textContent = '.reveal{opacity:1!important;transform:none!important}' +
                         '.tile > img{opacity:1!important}' +
                         '#site-header{position:static!important}' +
-                        '#float-whatsapp{position:static!important;display:none}';
+                        '#float-whatsapp{position:static!important;display:none}' +
+                        '#zu-floating-edit-btn{display:none!important}';
       doc.head.appendChild(fix);
     });
 
-    /* ---------- reusable blocks ---------- */
+    /* ---------- reusable drag & drop blocks ---------- */
     var bm = editor.BlockManager;
-    var cat = 'Zu-nique blocks';
+    var cat = 'Zu-nique Elements';
 
     function block(id, label, media, content) {
       bm.add(id, { label: label, category: cat, media: media, content: content, activate: true });
@@ -257,52 +341,53 @@
     block('zu-heading', 'Heading', ic('<path d="M6 4v16M18 4v16M6 12h12"/>'),
       '<h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white">New heading</h2>');
 
-    block('zu-text', 'Text', ic('<path d="M4 6h16M4 12h16M4 18h10"/>'),
-      '<p class="text-cream/65 leading-relaxed">New paragraph — double-click to edit this text.</p>');
+    block('zu-text', 'Text Paragraph', ic('<path d="M4 6h16M4 12h16M4 18h10"/>'),
+      '<p class="text-cream/70 leading-relaxed text-base">New paragraph — double-click to edit this text freely.</p>');
 
-    block('zu-image', 'Image', ic('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 18 5-5 4 4 3-3 4 4"/>'),
-      '<div class="tile aspect-[16/11] rounded-3xl shadow-lift ring-brand"><img src="assets/images/mark.png" alt="" class="loaded" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1"></div>');
+    block('zu-image', 'Image Tile', ic('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 18 5-5 4 4 3-3 4 4"/>'),
+      '<div class="tile aspect-[16/11] rounded-3xl shadow-lift ring-brand overflow-hidden"><img src="assets/images/mark.png" alt="" class="loaded" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1"></div>');
 
-    block('zu-card', 'Card', ic('<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18"/>'),
-      '<article class="group rounded-3xl overflow-hidden bg-white/[.035] ring-1 ring-white/[.07] shadow-lift">' +
-      '<div class="tile aspect-[16/11]"><img src="assets/images/mark.png" alt="" class="loaded" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1">' +
-      '<div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>' +
-      '<span class="absolute left-4 top-4 rounded-full bg-lime/12 text-lime px-3 py-1 text-[11px] font-bold ring-1 ring-white/10">Tag</span></div>' +
-      '<div class="p-6"><h3 class="font-display text-xl font-bold text-white">Card title</h3>' +
-      '<p class="mt-2.5 text-sm leading-relaxed text-cream/60">Short description for this card.</p></div></article>');
+    block('zu-card', 'Feature Card', ic('<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18"/>'),
+      '<article class="group rounded-3xl overflow-hidden bg-white/[.035] ring-1 ring-white/[.07] shadow-lift p-6">' +
+      '<div class="tile aspect-[16/11] rounded-2xl mb-4"><img src="assets/images/mark.png" alt="" class="loaded" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1"></div>' +
+      '<span class="rounded-full bg-lime/15 text-lime px-3 py-1 text-[11px] font-bold">Category</span>' +
+      '<h3 class="mt-3 font-display text-xl font-bold text-white">Card title</h3>' +
+      '<p class="mt-2 text-sm leading-relaxed text-cream/65">Short description for this card.</p></article>');
 
-    block('zu-grid-2', '2 columns', ic('<rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/>'),
-      '<div class="grid gap-6 sm:grid-cols-2"><div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/65">Column one</p></div>' +
-      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/65">Column two</p></div></div>');
+    block('zu-grid-2', '2 Columns', ic('<rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/>'),
+      '<div class="grid gap-6 sm:grid-cols-2"><div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/75">Column one content</p></div>' +
+      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/75">Column two content</p></div></div>');
 
-    block('zu-grid-3', '3 columns', ic('<rect x="2.5" y="5" width="5.6" height="14" rx="1.4"/><rect x="9.2" y="5" width="5.6" height="14" rx="1.4"/><rect x="15.9" y="5" width="5.6" height="14" rx="1.4"/>'),
+    block('zu-grid-3', '3 Columns', ic('<rect x="2.5" y="5" width="5.6" height="14" rx="1.4"/><rect x="9.2" y="5" width="5.6" height="14" rx="1.4"/><rect x="15.9" y="5" width="5.6" height="14" rx="1.4"/>'),
       '<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">' +
-      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/65">One</p></div>' +
-      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/65">Two</p></div>' +
-      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/65">Three</p></div></div>');
+      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/75">Column 1</p></div>' +
+      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/75">Column 2</p></div>' +
+      '<div class="rounded-3xl bg-white/[.035] ring-1 ring-white/[.07] p-6"><p class="text-cream/75">Column 3</p></div></div>');
 
-    block('zu-button', 'Button', ic('<rect x="3" y="8" width="18" height="8" rx="4"/>'),
+    block('zu-button', 'Action Button', ic('<rect x="3" y="8" width="18" height="8" rx="4"/>'),
       '<a href="#" class="inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3.5 font-semibold text-ink hover:bg-lime/90 transition shadow-glow">Button label</a>');
 
-    block('zu-whatsapp', 'WhatsApp button', ic('<path d="M21 12a8.5 8.5 0 0 1-12.4 7.6L4 21l1.5-4.4A8.5 8.5 0 1 1 21 12z"/>'),
-      '<a href="https://wa.me/27798200108" class="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3.5 font-semibold text-white transition">Chat on WhatsApp</a>');
+    block('zu-whatsapp', 'WhatsApp Button', ic('<path d="M21 12a8.5 8.5 0 0 1-12.4 7.6L4 21l1.5-4.4A8.5 8.5 0 1 1 21 12z"/>'),
+      '<a href="https://wa.me/27798200108" class="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3.5 font-semibold text-white hover:opacity-95 transition shadow-lift">Chat on WhatsApp</a>');
 
-    block('zu-hours', 'Hours card', ic('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
-      '<div class="rounded-2xl glass ring-brand p-4"><p class="text-[11px] uppercase tracking-widest text-lime/80 font-semibold">Day</p>' +
-      '<p class="mt-1 font-display text-lg font-bold text-white">08:30 &ndash; 17:00</p></div>');
+    block('zu-hours', 'Hours Badge', ic('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
+      '<div class="rounded-2xl glass ring-brand p-4"><p class="text-[11px] uppercase tracking-widest text-lime/80 font-semibold">Trading Hours</p>' +
+      '<p class="mt-1 font-display text-lg font-bold text-white">08:00 &ndash; 17:00</p></div>');
 
-    block('zu-divider', 'Divider', ic('<path d="M3 12h18"/>'),
-      '<div class="my-12 h-px w-full bg-white/[.08]"></div>');
+    block('zu-callout', 'Alert / Notice', ic('<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>'),
+      '<div class="rounded-2xl bg-lime/10 border border-lime/30 p-5 text-lime"><p class="font-bold text-sm">Notice Title</p><p class="mt-1 text-sm text-cream/80">Add important store announcements or stock updates here.</p></div>');
+
+    block('zu-divider', 'Divider Line', ic('<path d="M3 12h18"/>'),
+      '<div class="my-10 h-px w-full bg-white/[.08]"></div>');
 
     /* ---------- export ---------- */
     function buildDocument() {
       var head = document.head.cloneNode(true);
-      // drop the editor's own stylesheet, keep everything the site needs
       head.querySelectorAll('link[href*="grapesjs"]').forEach(function (n) { n.remove(); });
 
       var editorCss = editor.getCss({ avoidProtected: true }) || '';
       var body = editor.getHtml();
-      var extra = editorCss.trim() ? '\n<style>/* styles added in the visual editor */\n' + editorCss + '\n</style>\n' : '\n';
+      var extra = editorCss.trim() ? '\n<style>/* styles added in visual editor */\n' + editorCss + '\n</style>\n' : '\n';
 
       return '<!DOCTYPE html>\n<html lang="en" class="scroll-smooth">\n<head>\n' +
         head.innerHTML.trim() + extra +
@@ -310,7 +395,6 @@
         body + '\n' + ORIGINAL_SCRIPTS + '\n</body>\n</html>\n';
     }
 
-    // Grab the original page's inline scripts BEFORE the body was replaced.
     var ORIGINAL_SCRIPTS = window.__ZU_SCRIPTS__ || '';
 
     document.getElementById('zu-export').addEventListener('click', function () {
@@ -319,10 +403,10 @@
         var blob = new Blob([out], { type: 'text/html;charset=utf-8' });
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'index.html';
+        a.download = repoPath();
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-        toast('File downloaded. Commit it to your repo to publish.');
+        toast('File downloaded successfully.');
       } catch (err) {
         toast('Export failed: ' + err.message, 'bad');
       }
@@ -335,7 +419,7 @@
       publishBtn.disabled = on;
       publishBtn.style.opacity = on ? '.6' : '1';
       publishBtn.style.cursor = on ? 'default' : 'pointer';
-      publishBtn.textContent = label || (on ? 'Publishing…' : 'Publish');
+      publishBtn.textContent = label || (on ? 'Publishing…' : '🚀 Publish to Live');
     }
 
     publishBtn.addEventListener('click', function () {
@@ -348,7 +432,7 @@
         .then(function () { setBusy(true, 'Publishing…'); return commitFile(buildDocument()); })
         .then(function () {
           setBusy(false);
-          toast('Published. The live site updates in about a minute.');
+          toast('✨ Published! The live site updates in ~60 seconds.');
         })
         .catch(function (err) {
           setBusy(false);
@@ -358,26 +442,22 @@
     });
 
     document.getElementById('zu-exit').addEventListener('click', function () {
-      if (confirm('Leave the editor? Anything you have not published or downloaded will be lost.')) {
+      if (confirm('Exit visual editor and view live site? Any unsaved edits will be discarded.')) {
         window.location.href = window.location.pathname;
       }
     });
 
-    toast('Editor ready — drag blocks from the panel on the right');
+    toast('Visual Editor ready — drag blocks from the right panel or click to edit');
   }
 
-  /* Preserve the page's own scripts so a published or downloaded file is
-     still a working site: hours, WhatsApp links, card rendering, the
-     species data, and the editor itself. */
+  /* Stash inline scripts */
   (function stashScripts() {
     var out = [];
     document.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('script').forEach(function (s) {
-        // s.src resolves to an absolute URL, so test the written attribute
         var raw = s.getAttribute('src');
         if (raw) {
           if (/grapesjs/.test(raw)) return;
-          // CDN scripts already live in <head>; local ones must be kept
           if (/^(https?:)?\/\//i.test(raw)) return;
           out.push('<script src="' + raw + '"' + (s.defer ? ' defer' : '') + '><\/script>');
           return;
@@ -390,7 +470,7 @@
     });
   })();
 
-  /* ---------- GitHub sign-in, through the CMS OAuth worker ---------- */
+  /* ---------- GitHub sign-in through OAuth worker ---------- */
   function signIn() {
     if (token) return Promise.resolve(token);
 
@@ -403,14 +483,14 @@
         'zu-github-auth',
         'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top
       );
-      if (!popup) { reject(new Error('the sign-in window was blocked, allow popups for this site')); return; }
+      if (!popup) { reject(new Error('Sign-in window blocked: please allow popups')); return; }
 
       var done = false;
       var expected;
       try { expected = new URL(CONFIG.oauth).origin; } catch (err) { expected = null; }
 
       function onMessage(e) {
-        if (expected && e.origin !== expected) return;   // ignore anything not from the OAuth worker
+        if (expected && e.origin !== expected) return;
         var d = e.data;
         if (typeof d !== 'string') return;
         if (d === 'authorizing:github') { popup.postMessage('authorizing:github', '*'); return; }
@@ -419,10 +499,10 @@
           try {
             token = JSON.parse(d.slice('authorization:github:success:'.length)).token;
             resolve(token);
-          } catch (err) { reject(new Error('could not read the sign-in response')); }
+          } catch (err) { reject(new Error('Could not parse sign-in response')); }
         } else if (d.indexOf('authorization:github:error:') === 0) {
           finish();
-          reject(new Error('GitHub refused the sign-in'));
+          reject(new Error('GitHub authorization refused'));
         }
       }
       function finish() {
@@ -435,14 +515,14 @@
       window.addEventListener('message', onMessage, false);
 
       var watch = setInterval(function () {
-        if (popup.closed && !done) { finish(); reject(new Error('the sign-in window was closed')); }
+        if (popup.closed && !done) { finish(); reject(new Error('Sign-in window was closed')); }
       }, 600);
 
-      setTimeout(function () { if (!done) { finish(); reject(new Error('sign-in timed out')); } }, 120000);
+      setTimeout(function () { if (!done) { finish(); reject(new Error('Sign-in timed out')); } }, 120000);
     });
   }
 
-  /* ---------- commit the page to the repo ---------- */
+  /* ---------- commit file to GitHub ---------- */
   function b64(str) {
     var bytes = new TextEncoder().encode(str);
     var bin = '';
@@ -457,8 +537,8 @@
       Accept: 'application/vnd.github+json'
     }, opts.headers || {});
     return fetch('https://api.github.com' + path, opts).then(function (r) {
-      if (r.status === 401) throw new Error('the GitHub sign-in was rejected, try again');
-      if (r.status === 403) throw new Error('this GitHub account cannot write to ' + CONFIG.repo);
+      if (r.status === 401) throw new Error('GitHub authentication rejected');
+      if (r.status === 403) throw new Error('Account does not have write access to ' + CONFIG.repo);
       return r.json().then(function (body) { return { status: r.status, body: body }; });
     });
   }
@@ -469,15 +549,15 @@
 
     return api(base + '?ref=' + encodeURIComponent(CONFIG.branch))
       .then(function (res) {
-        var sha = res.status === 200 ? res.body.sha : undefined;   // absent means a new file
+        var sha = res.status === 200 ? res.body.sha : undefined;
         if (res.status !== 200 && res.status !== 404) {
-          throw new Error(res.body.message || 'GitHub returned ' + res.status);
+          throw new Error(res.body.message || 'GitHub error ' + res.status);
         }
         return api(base, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: 'Edit ' + path + ' in the visual editor',
+            message: 'Update ' + path + ' via Visual Drag & Drop Editor',
             content: b64(html),
             branch: CONFIG.branch,
             sha: sha
@@ -485,9 +565,9 @@
         });
       })
       .then(function (res) {
-        if (res.status === 409) throw new Error('someone else changed this file, reload the page and redo the edit');
+        if (res.status === 409) throw new Error('File conflict: please reload the page and redo the edit');
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error(res.body.message || 'GitHub returned ' + res.status);
+          throw new Error(res.body.message || 'GitHub error ' + res.status);
         }
         return res.body;
       });
